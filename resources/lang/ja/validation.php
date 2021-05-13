@@ -150,6 +150,7 @@ return [
             'password' => 'パスワード',
             'name' => '氏名',
             'email' => 'メールアドレス',
+            'costomer_id' => 'チーム選択',
         ],
 
 ];

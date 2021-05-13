@@ -32,9 +32,9 @@ function showProcess(date) {
 // カレンダー作成
 function createProcess(year, month) {
     // 曜日
-    var calendar = "<table><tr class='dayOfWeek'>";
+    var calendar = "<table class='ctable'><tr class='dayOfWeek ctr'>";
     for (var i = 0; i < week.length; i++) {
-        calendar += "<th>" + week[i] + "</th>";
+        calendar += "<th class='cth'>" + week[i] + "</th>";
     }
     calendar += "</tr>";
 
@@ -46,25 +46,25 @@ function createProcess(year, month) {
 
     // 1行ずつ設定
     for (var i = 0; i < row; i++) {
-        calendar += "<tr>";
+        calendar += "<tr class='ctr'>";
         // 1colum単位で設定
         for (var j = 0; j < week.length; j++) {
             if (i == 0 && j < startDayOfWeek) {
                 // 1行目で1日まで先月の日付を設定
-                calendar += "<td class='disabled'>" + (lastMonthEndDate - startDayOfWeek + j + 1) + "</td>";
+                calendar += "<td class='disabled ctd'>" + (lastMonthEndDate - startDayOfWeek + j + 1) + "</td>";
             } else if (count >= endDate) {
                 // 最終行で最終日以降、翌月の日付を設定
                 count++;
-                calendar += "<td class='disabled'>" + (count - endDate) + "</td>";
+                calendar += "<td class='disabled ctd'>" + (count - endDate) + "</td>";
             } else {
                 // 当月の日付を曜日に照らし合わせて設定
                 count++;
                 if(year == today.getFullYear()
                   && month == (today.getMonth())
                   && count == today.getDate()){
-                    calendar += "<td class='today'>" + count + "</td>";
+                    calendar += "<td class='today ctd'>" + count + "</td>";
                 } else {
-                    calendar += "<td>" + count + "</td>";
+                    calendar += "<td class='ctd'>" + count + "</td>";
                 }
             }
         }

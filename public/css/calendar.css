@@ -18,33 +18,33 @@
     text-align: center;
     width: 100%;
 }
-table {
+.ctable {
     border-collapse: collapse;
     width: 100%;
 }
-th {
+.cth {
     color: #000;
 }
-th, td {
+.cth, td {
     border: 1px solid #ddd;
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
 }
 /*日曜日*/
-td:first-child {
+.ctd:first-child {
     color: red;
 }
 /*土曜日*/
-td:last-child {
+.ctd:last-child {
     color: blue;
 }
 /*前後月の日付*/
-td.disabled {
+.ctd.disabled {
     color: #ccc;
 }
 /*本日*/
-td.today {
+.ctd.today {
     background-color: #D65E72;
     color: #fff;
 }
