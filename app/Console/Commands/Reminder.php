@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ReminderMail;
 use App\Models\User;
 use Carbon\Carbon;
+use DateTime;
 
 class Reminder extends Command
 {
@@ -42,14 +43,26 @@ class Reminder extends Command
     public function handle()
     {
         
-        $today = Carbon::now()->format('Y-m-d H:i:00');
+        //$today = Carbon::now()->format('Y-m-d H:i:00');
         $schedules = \App\Schedule::all();
         //dd($today,$schedules);
+        $dt = new Carbon();
+        $dt1 = $dt->addMinutes(30)->format('Y-m-d H:i:00');
+        $dt2 = $dt->addMinutes(60)->format('Y-m-d H:i:00');
         
         foreach($schedules as $schedule){
-            if($schedule->day == $today && $schedule->reminder == 1){
-                $user = \App\User::find($schedule->user_id);
-                return Mail::to($user->email)->send(new ReminderMail($schedule));
+            
+            if($schedule->reminder == 1){
+                
+                $time = Carbon::parse($schedule->day)->between($dt1, $dt2);
+                
+                if($time){
+                    echo '送信<br/>';
+                    $user = \App\User::find($schedule->user_id);
+                    Mail::to($user->email)->send(new ReminderMail($schedule));
+                } else {
+                    echo $diffTimeOutPut['hours'].'時間<br/>';
+                }
             }
         }
     }

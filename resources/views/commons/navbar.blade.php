@@ -6,7 +6,7 @@
                 <a class="nav-link" href="/">
                     ホーム
                 </a>
-                <div class="sb-sidenav-menu-heading">タスク管理</div>
+                <div class="sb-sidenav-menu-heading">スケジュール管理</div>
                 {!! link_to_route('schedules.index', '一覧', [], ['class' => 'nav-link']) !!}
                 {!! link_to_route('schedules.create', '作成', [], ['class' => 'nav-link']) !!}
                         
