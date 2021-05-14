@@ -18,7 +18,7 @@ class SchedulesController extends Controller
             $day = new DateTime();
             $d1 = $day->format('Y-m-d');
             
-            $schedules = $user->schedules()->where('day', 'like', '%' . $d1 . '%')->get();
+            $schedules = $user->schedules()->where('day', 'like', '%' . $d1 . '%')->latest()->get();
             
             $data = [
                     'user' => $user,

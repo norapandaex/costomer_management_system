@@ -58,7 +58,7 @@ class Reminder extends Command
                 $time = Carbon::parse($schedule->day)->between($dt1, $dt2);
                 
                 if($time){
-                    echo '送信<br/>';
+                    echo '送信';
                     $user = \App\User::find($schedule->user_id);
                     Mail::to($user->email)->send(new ReminderMail($schedule));
                 } else {
