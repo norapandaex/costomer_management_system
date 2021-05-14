@@ -49,7 +49,7 @@ class Reminder extends Command
         $dtn1 = new Carbon();
         $dt1 = $dtn1->addMinutes(30)->format('Y-m-d H:i:00');
         $dtn2 = new Carbon();
-        $dt2 = $dtn2->addMinutes(60)->format('Y-m-d H:i:00');
+        $dt2 = $dtn2->addMinutes(45)->format('Y-m-d H:i:00');
         
         foreach($schedules as $schedule){
             
