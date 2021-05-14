@@ -60,8 +60,6 @@ class Reminder extends Command
                     echo '送信<br/>';
                     $user = \App\User::find($schedule->user_id);
                     Mail::to($user->email)->send(new ReminderMail($schedule));
-                } else {
-                    echo $diffTimeOutPut['hours'].'時間<br/>';
                 }
             }
         }
