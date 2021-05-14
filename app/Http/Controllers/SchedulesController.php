@@ -14,11 +14,11 @@ class SchedulesController extends Controller
         $data = [];
         if(\Auth::check()){
             $user = \Auth::user();
-            //$schedules = $user->schedules()->oderBy('created_at', 'desc');
+            
             $day = new DateTime();
             $d1 = $day->format('Y-m-d');
             
-            $schedules = \App\Schedule::where('day', 'like', '%' . $d1 . '%')->get();
+            $schedules = $user->schedules()->where('day', 'like', '%' . $d1 . '%')->get();
             
             $data = [
                     'user' => $user,

@@ -23,12 +23,12 @@
                 
                 <div class="form-group">
                     {!! Form::label('open', '公開日') !!}
-                    <input type="date" name="open" class="form-control" value="{{ $open }}">
+                    <input type="date" name="open" class="form-control" value="{{ $site->open }}">
                 </div>
                 
                 <div class="form-group">
                     {!! Form::label('contract_day', '契約日') !!}
-                    <input type="date" name="contract_day" class="form-control" value="{{ $contract_day }}">
+                    <input type="date" name="contract_day" class="form-control" value="{{ $site->contract_day }}">
                 </div>
                 
                 <div class="form-group">
@@ -43,7 +43,7 @@
                 
                 <div class="form-group">
                     {!! Form::label('start', '制作開始日') !!}
-                    <input type="date" name="start" class="form-control" value="{{ $start }}">
+                    <input type="date" name="start" class="form-control" value="{{ $site->start }}">
                 </div>
                 
                 <div class="form-group">
