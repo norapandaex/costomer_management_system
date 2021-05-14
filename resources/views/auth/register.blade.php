@@ -1,3 +1,6 @@
+@extends('layouts.app')
+
+@section('content')
     <h1 class="mt-4">ユーザ登録</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">register</li>
@@ -33,3 +36,4 @@
             {!! Form::close() !!}
         </div>
     </div>
+@endsection
