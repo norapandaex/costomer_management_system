@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="mt-4">スケジュール詳細</h1>
+    <h1 class="mt-4">サイト詳細</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Schedule</li>
     </ol>
@@ -18,6 +18,8 @@
                         </li>
                     </ul>
                 </div><br>
+                
+                @include('commons.error_messages')
                 
                 <div class="col-10 offset-1">
                     <div class="card mb-4">
@@ -63,13 +65,20 @@
                             <tr>
                                 <td>{{ $pv->day }}</td>
                                 <td>{{ $pv->pv }}</td>
-                                <td>{{--{!! link_to_route('schedules.show', '詳細', ['id' => $schedule->id], ['class' => 'btn btn-primary']) !!}--}}</td>
+                                <td>
+                                    {!! Form::open(['route' => ['sites.pv_destroy', ['id' => $pv->id, 'site' => $site->id]], 'method' => 'delete']) !!}
+                                        {!! link_to_route('sites.pv_edit', '編集', ['id' => $pv->id, 'site' => $site->id], ['class' => 'btn btn-primary']) !!}&nbsp;&nbsp;
+                                        {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
+                                    {!! Form::close() !!}
+                                </td>
                             </tr>
                             <?php
-                                $pvdata[] = $pv->pv;
-                                $daydata[] = $pv->day;
-                                $varJsPv = json_encode($pvdata);
-                                $varJsDay = json_encode($daydata);
+                                if(count($pvs) > 0){
+                                    $pvdata[] = $pv->pv;
+                                    $daydata[] = $pv->day;
+                                    $varJsPv = json_encode($pvdata);
+                                    $varJsDay = json_encode($daydata);
+                                }
                             ?>
                             @endforeach
                         </tbody>
@@ -79,9 +88,11 @@
         </div>
     </div>
     
+    @if(count($pvs) > 0)
     <script type="text/javascript">
     var pvs=JSON.parse('<?php echo $varJsPv; ?>');
     var days=JSON.parse('<?php echo $varJsDay; ?>');
     </script>
+    @endif
  
 @endsection

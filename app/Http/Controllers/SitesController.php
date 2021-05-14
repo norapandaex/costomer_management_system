@@ -43,9 +43,9 @@ class SitesController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = [
-            'costomer_id' => ['required'],
-        ];
+        $request->validate([
+            'costomer_id' => 'required',
+        ]);
         
         $id = $request->costomer_id;
         
@@ -147,9 +147,8 @@ class SitesController extends Controller
     public function pv_index($id){
         
         $site = \App\Site::find($id);
-        $pvs = \App\Pv::all();
         
-        $pvs = $site->pvs()->get();
+        $pvs = $site->pvs()->orderBy('pvs.day')->get();
         
         $data = [
                 'site' => $site,
@@ -160,10 +159,11 @@ class SitesController extends Controller
     }
     
     public function pv_store(Request $request, $id){
-        $rules = [
-            'day' => ['required'],
-            'pv' => ['required'],
-        ];
+        
+        $request->validate([
+            'day' => 'required',
+            'pv' => 'required',
+        ]);
         
         $site = \App\Site::find($id);
         
@@ -173,5 +173,36 @@ class SitesController extends Controller
         ]);
         
         return redirect()->route('sites.pv', ['id' => $id]);
+    }
+    
+    public function pv_edit($id, $site){
+        $pv = \App\Pv::find($id);
+        $site = \App\Site::find($site);
+        
+        return view('sites.pv_edit', [
+            'pv' => $pv,
+            'site' => $site,
+        ]);
+    }
+    
+    public function pv_update(Request $request, $id, $site){
+        
+        $pv = \App\Pv::find($id);
+        
+        $pv->day = $request->day;
+        $pv->pv = $request->pv;
+        
+        $pv->save();
+        
+        return redirect()->route('sites.pv', ['id' => $site]);
+    }
+    
+    public function pv_destroy($id, $site){
+        
+        $pv = \App\Pv::find($id);
+        
+        $pv->delete();
+        
+        return redirect()->route('sites.pv', ['id' => $site]);
     }
 }

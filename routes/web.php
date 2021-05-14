@@ -42,3 +42,6 @@ Route::resource('costomers', 'CostomersController');
 Route::resource('sites', 'SitesController');
 Route::get('sites/pv/{id}', 'SitesController@pv_index')->name('sites.pv');
 Route::post('sites/pv_store/{id}', 'SitesController@pv_store')->name('sites.pv_store');
+Route::get('sites/pv_edit/{id}/{site}', 'SitesController@pv_edit')->name('sites.pv_edit');
+Route::put('sites/pv_update/{id}/{site}', 'SitesController@pv_update')->name('sites.pv_update');
+Route::delete('sites/pv_destroy/{id}/{site}', 'SitesController@pv_destroy')->name('sites.pv_destroy');
