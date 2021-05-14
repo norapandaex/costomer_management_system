@@ -14,8 +14,8 @@ class ModifySchedulesTable extends Migration
     public function up()
     {
         Schema::table('schedules', function (Blueprint $table) {
-            $table->integer('status')->default(0)->change();
-            $table->integer('reminder')->change();
+            $table->string('status')->default(0)->change();
+            $table->string('reminder')->change();
         });
     }
 
