@@ -67,20 +67,21 @@
                             </tr>
                             <?php
                                 $pvdata[] = $pv->pv;
-                                $varJsSample = json_encode($pvdata);
+                                $daydata[] = $pv->day;
+                                $varJsPv = json_encode($pvdata);
+                                $varJsDay = json_encode($daydata);
                             ?>
                             @endforeach
-                            <?php dd($pvdata)?>
                         </tbody>
                     </table>
                 </div><br>
-                
             </div><br>
         </div>
     </div>
     
-<script type="text/javascript">
-var sample=JSON.parse('<?php echo $varJsSample; ?>');//jsonをparseしてJavaScriptの変数に代入
-</script>
+    <script type="text/javascript">
+    var pvs=JSON.parse('<?php echo $varJsPv; ?>');
+    var days=JSON.parse('<?php echo $varJsDay; ?>');
+    </script>
  
 @endsection

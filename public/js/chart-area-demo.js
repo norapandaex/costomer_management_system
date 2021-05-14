@@ -5,7 +5,7 @@
  var myLineChart = new Chart(ctx, {
    type: 'line',
    data: {
-     labels: ["1日", "5日", "10日", "15日", "20日", "25日", "30日"],
+     labels: days,
      datasets: [{
        label: "日間PV",
        lineTension: 0.3,
@@ -18,7 +18,7 @@
        pointHoverBackgroundColor: "rgba(2,117,216,1)",
        pointHitRadius: 50,
        pointBorderWidth: 2,
-       data: sample,
+       data: pvs,
      }],
    },
    options: {

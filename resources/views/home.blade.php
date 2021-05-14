@@ -20,7 +20,6 @@
             <div id="calendar"></div>
         </div>
     </div><br><br>
-    @include('graph')
     <h3>本日の予定</h3><br>
         <table class="table table-bordered table-hover" id="schedules">
             <thead>
