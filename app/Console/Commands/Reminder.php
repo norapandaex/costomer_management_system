@@ -46,9 +46,10 @@ class Reminder extends Command
         //$today = Carbon::now()->format('Y-m-d H:i:00');
         $schedules = \App\Schedule::all();
         //dd($today,$schedules);
-        $dt = new Carbon();
-        $dt1 = $dt->addMinutes(30)->format('Y-m-d H:i:00');
-        $dt2 = $dt->addMinutes(60)->format('Y-m-d H:i:00');
+        $dtn1 = new Carbon();
+        $dt1 = $dtn1->addMinutes(30)->format('Y-m-d H:i:00');
+        $dtn2 = new Carbon();
+        $dt2 = $dtn2->addMinutes(60)->format('Y-m-d H:i:00');
         
         foreach($schedules as $schedule){
             
@@ -60,6 +61,8 @@ class Reminder extends Command
                     echo '送信<br/>';
                     $user = \App\User::find($schedule->user_id);
                     Mail::to($user->email)->send(new ReminderMail($schedule));
+                } else {
+                    echo 'false';
                 }
             }
         }
