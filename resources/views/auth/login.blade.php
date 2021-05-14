@@ -23,6 +23,8 @@
 
                 {!! Form::submit('Log in', ['class' => 'btn btn-primary btn-block']) !!}
             {!! Form::close() !!}
+            
+            {!! link_to_route('auth.register', '登録', [], ['class' => 'nav-link']) !!}
         </div>
     </div>
 @endsection
