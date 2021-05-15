@@ -153,6 +153,9 @@ return [
             'costomer_id' => 'チーム選択',
             'day' => '日付',
             'pv' => 'pv数',
-        ],
+            'team_name' => 'チーム名',
+            'title' => 'タイトル',
+            'content' => '内容',
+            ],
 
 ];

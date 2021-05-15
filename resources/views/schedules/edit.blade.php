@@ -5,7 +5,7 @@
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Schedule</li>
     </ol>
-    
+    @include('commons.error_messages')
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
 

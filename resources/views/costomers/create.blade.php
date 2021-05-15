@@ -5,14 +5,15 @@
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Schedule</li>
     </ol>
+    @include('commons.error_messages')
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
 
             {!! Form::open(['route' => 'costomers.store']) !!}
                 
                 <div class="form-group">
-                    {!! Form::label('name', 'チーム名') !!}
-                    {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                    {!! Form::label('team_name', 'チーム名') !!}
+                    {!! Form::text('team_name', null, ['class' => 'form-control']) !!}
                 </div>
 
                 <div class="form-group">
@@ -99,5 +100,7 @@
             {!! Form::close() !!}
         </div>
     </div>
+    
+    <script src="{{ asset('/js/address.js') }}"></script>
     
 @endsection

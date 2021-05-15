@@ -64,4 +64,5 @@
             </tbody>
         </table><br>
     
+    <script src="{{ asset('/js/calendar.js') }}"></script>
 @endsection

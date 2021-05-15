@@ -5,15 +5,15 @@
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Schedule</li>
     </ol>
-    
+    @include('commons.error_messages')
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
 
             {!! Form::model($costomer, ['route' => ['costomers.update', $costomer->id], 'method' => 'put']) !!}
                 
                 <div class="form-group">
-                    {!! Form::label('name', 'チーム名') !!}
-                    {!! Form::text('name', $costomer->name, ['class' => 'form-control']) !!}
+                    {!! Form::label('team_name', 'チーム名') !!}
+                    {!! Form::text('team_name', $costomer->name, ['class' => 'form-control']) !!}
                 </div>
 
                 <div class="form-group">
@@ -56,7 +56,7 @@
                 <div class="form-row align-items-center">
                     <div class="col-md-6 mb-4">
                         <label for="address">郵便番号</label>
-                        <input class="form-control" id="address" name="address" type="text" size="12" maxlength="8" placeholder="000-0000" value="{{ $costomer->address }}">
+                        <input class="form-control" id="postcode" name="address" type="text" size="12" maxlength="8" placeholder="000-0000" value="{{ $costomer->address }}">
                     </div>
                     <div class="col-auto my-1">
                         <a href="#" class="btn btn-secondary" id="pos">検索</a>
@@ -67,7 +67,7 @@
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label>都道府県</label>
-                            <input class="form-control" id="prefecture" name="prefecture" type="text" size="6" value="{{ $costomer->prefecture }}">
+                            <input class="form-control" id="pref" name="prefecture" type="text" size="6" value="{{ $costomer->prefecture }}">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label>市区町村</label>
@@ -77,7 +77,7 @@
                     <div class="form-row">
                         <div class="col-md-12 mb-3">
                             <label>住所</label>
-                            <input class="form-control" id="other" name="other" type="text" value="{{ $costomer->other }}">
+                            <input class="form-control" id="address" name="other" type="text" value="{{ $costomer->other }}">
                         </div>
                     </div>
                 </div>
@@ -103,5 +103,7 @@
             {!! Form::close() !!}
         </div>
     </div>
+    
+    <script src="{{ asset('/js/address.js') }}"></script>
     
 @endsection

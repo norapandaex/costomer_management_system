@@ -38,12 +38,12 @@ class CostomersController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'team_name' => 'required',
         ]);
         
         $costomers = new \App\Costomer;
         
-        $costomers->name = $request->name;
+        $costomers->team_name = $request->team_name;
         $costomers->relation = $request->relation;
         $costomers->category = $request->category;
         $costomers->staff = $request->staff;
@@ -94,9 +94,13 @@ class CostomersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'team_name' => 'required',
+        ]);
+        
         $costomer = \App\Costomer::findOrFail($id);
         
-        $costomer->name = $request->name;
+        $costomer->team_name = $request->team_name;
         $costomer->relation = $request->relation;
         $costomer->category = $request->category;
         $costomer->staff = $request->staff;
