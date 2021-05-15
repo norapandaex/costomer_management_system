@@ -110,6 +110,10 @@ class SitesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'costomer_id' => 'required',
+        ]);
+        
         $site = \App\Site::findOrFail($id);
         
         $site->name = $request->name;

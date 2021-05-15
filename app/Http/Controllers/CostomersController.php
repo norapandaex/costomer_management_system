@@ -37,6 +37,10 @@ class CostomersController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+        ]);
+        
         $costomers = new \App\Costomer;
         
         $costomers->name = $request->name;

@@ -57,6 +57,14 @@ class SchedulesController extends Controller
     }
     
     public function store(Request $request){
+        
+        $request->validate([
+            'day' => 'required',
+            'title' => 'required',
+            'content' => 'required',
+            'reminder' => 'required',
+        ]);
+        
         $request->user()->schedules()->create([
                 'day' => $request->day,
                 'title' => $request->title,
@@ -68,6 +76,13 @@ class SchedulesController extends Controller
     }
     
     public function update(Request $request,$id){
+        $request->validate([
+            'day' => 'required',
+            'title' => 'required',
+            'content' => 'required',
+            'reminder' => 'required',
+        ]);
+        
         $schedule = \App\Schedule::findOrFail($id);
         
         $schedule->day = $request->day;
