@@ -18,6 +18,22 @@
         
             <!-- カレンダー -->
             <div id="calendar"></div>
+            <div id="caleandar"></div>
+        </div>
+    </div><br><br>
+    <div class="row">
+        <div class="col-12">
+            <!-- xxxx年xx月を表示 -->
+            <h1 id="header"></h1>
+        
+            <!-- ボタンクリックで月移動 -->
+            <div id="next-prev-button">
+                <button id="prev" onclick="prev()">‹</button>
+                <button id="next" onclick="next()">›</button>
+            </div>
+        
+            <!-- カレンダー -->
+            <div id="caleandar"></div>
         </div>
     </div><br><br>
     <h3>本日の予定</h3><br>
@@ -65,4 +81,6 @@
         </table><br>
     
     <script src="{{ asset('/js/calendar.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/caleandar.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/demo.js') }}"></script>
 @endsection

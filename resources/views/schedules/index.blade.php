@@ -6,6 +6,8 @@
         <li class="breadcrumb-item active">Schedule</li>
     </ol>
     
+    <div id="mini-calendar"></div>
+    
     {!! link_to_route('schedules.create', '作成', [], ['class' => 'btn btn-info btn-lg']) !!}
     
     <div class="col-12">&nbsp;</div>
@@ -49,8 +51,30 @@
                     </td>
                     <td>{!! link_to_route('schedules.show', '詳細', ['id' => $schedule->id], ['class' => 'btn btn-primary']) !!}</td>
                 </tr>
+                <?php
+                    if(count($schedules) > 0){
+                        $title[] = $schedule->title;
+                        $daydata[] = $schedule->day;
+                        $varJsTitle = json_encode($title);
+                        $varJsDay = json_encode($daydata);
+                    }
+                ?>
                 @endforeach
             </tbody>
         </table>
-    
+    @if(count($schedules) > 0)
+    <script type="text/javascript">
+    var titles=JSON.parse('<?php echo $varJsTitle; ?>');
+    var days=JSON.parse('<?php echo $varJsDay; ?>');
+    </script>
+    @endif
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+    <script src="{{ asset('js/jquery.minicalendar.js') }}"></script>
+    <script>
+        (function($) {
+    $(function() {
+        $('#mini-calendar').miniCalendar();
+    });
+})(jQuery);
+    </script>
 @endsection
