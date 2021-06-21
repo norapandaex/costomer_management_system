@@ -14,7 +14,7 @@ class CostomersController extends Controller
     public function index()
     {
         $costomers = \App\Costomer::all();
-        return view('costomers.index',[
+        return view('costomers.index', [
             'costomers' => $costomers,
         ]);
     }
@@ -40,10 +40,10 @@ class CostomersController extends Controller
         $request->validate([
             'team_name' => 'required',
         ]);
-        
+
         $costomers = new \App\Costomer;
-        
-        $costomers->team_name = $request->team_name;
+
+        $costomers->name = $request->team_name;
         $costomers->relation = $request->relation;
         $costomers->category = $request->category;
         $costomers->staff = $request->staff;
@@ -54,8 +54,8 @@ class CostomersController extends Controller
         $costomers->email = $request->email;
         $costomers->tel = $request->tel;
         $costomers->save();
-        
-            
+
+
         return redirect()->route('costomers.index');
     }
 
@@ -67,9 +67,12 @@ class CostomersController extends Controller
      */
     public function show($id)
     {
+
         $costomer = \App\Costomer::find($id);
-        
-        return view('costomers.show', ['costomer' => $costomer]);
+
+        $sites = $costomer->sites;
+
+        return view('costomers.show', ['costomer' => $costomer, 'sites' => $sites]);
     }
 
     /**
@@ -81,7 +84,7 @@ class CostomersController extends Controller
     public function edit($id)
     {
         $costomer = \App\Costomer::find($id);
-        
+
         return view('costomers.edit', ['costomer' => $costomer]);
     }
 
@@ -97,9 +100,9 @@ class CostomersController extends Controller
         $request->validate([
             'team_name' => 'required',
         ]);
-        
+
         $costomer = \App\Costomer::findOrFail($id);
-        
+
         $costomer->team_name = $request->team_name;
         $costomer->relation = $request->relation;
         $costomer->category = $request->category;
@@ -110,9 +113,9 @@ class CostomersController extends Controller
         $costomer->other = $request->other;
         $costomer->email = $request->email;
         $costomer->tel = $request->tel;
-        
+
         $costomer->save();
-            
+
         return redirect()->route('costomers.show', ['costomer' => $costomer]);
     }
 
@@ -125,9 +128,27 @@ class CostomersController extends Controller
     public function destroy($id)
     {
         $costomer = \App\Costomer::findOrFail($id);
-        
+
         $costomer->delete();
-        
+
         return redirect()->route('costomers.index');
+    }
+
+    public function meeting($id)
+    {
+        $costomer = \App\Costomer::findOrFail($id);
+        $schedules = [];
+
+        $sches = \App\Schedule::all();
+
+        foreach ($sches as $sche) {
+            $cid = $sche->costomer_id;
+
+            if ($cid == $id) {
+                $schedules[] = $sche;
+            }
+        }
+
+        return view('costomers.meeting', ['schedules' => $schedules, 'costomer' => $costomer]);
     }
 }
