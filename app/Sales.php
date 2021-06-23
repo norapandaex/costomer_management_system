@@ -15,6 +15,7 @@ class Sales extends Model
     {
         return $this->belongsTo(Site::class);
     }
+<<<<<<< HEAD
 
     public function get_sales()
     {
@@ -76,4 +77,6 @@ class Sales extends Model
 
         return [array_to_object($sales_data), count($sales_data)];
     }
+=======
+>>>>>>> 3dde02f52e6cdaf56045571b8234863252a60a1e
 }

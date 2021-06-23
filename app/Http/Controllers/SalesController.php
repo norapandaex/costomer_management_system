@@ -13,6 +13,7 @@ class SalesController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         $sales = new \App\Sales;
 
         list($sales, $counts) = $sales->get_sales();
@@ -25,6 +26,15 @@ class SalesController extends Controller
     }
 
 
+=======
+        $sales = \App\Sales::all();
+
+        return view('sales.index', [
+            'sales' => $sales,
+        ]);
+    }
+
+>>>>>>> 3dde02f52e6cdaf56045571b8234863252a60a1e
     /**
      * Store a newly created resource in storage.
      *

@@ -16,12 +16,22 @@
         売り上げ表
       </div>
       <div class="card-body">
+<<<<<<< HEAD
         <canvas id="myBarChart" width="100%" height="40"></canvas>
       </div>
     </div>
   </div>
   <div class="col-10 offset-1">
     <table class="table table-bordered table-hover" id="sales">
+=======
+        <canvas id="myAreaChart" width="100%" height="40"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-10 offset-1">
+    <table class="table table-bordered table-hover" id="schedules">
+>>>>>>> 3dde02f52e6cdaf56045571b8234863252a60a1e
       <thead>
         <tr>
           <th>売り上げ月</th>
@@ -36,9 +46,15 @@
       <tbody class="text-center">
         @foreach($sales as $sale)
         <tr>
+<<<<<<< HEAD
           <td>{{ $sale->month }}</td>
           <td>{{ $sale->costomer_name }}</td>
           <td>{{ $sale->site_name }}</td>
+=======
+          <td>{{ $sale->production_month }}</td>
+          <td>{{ $sale->site->costomer->name }}</td>
+          <td>{{ $sale->site->name }}</td>
+>>>>>>> 3dde02f52e6cdaf56045571b8234863252a60a1e
           <td>{{ $sale->production_cost }}</td>
           <td>{{ $sale->operating_cost }}</td>
           <td>{{ $sale->sum_cost }}</td>
@@ -46,6 +62,7 @@
             {!! link_to_route('sales.edit', '編集', ['id' => $sale->site_id], ['class' => 'btn btn-primary']) !!}&nbsp;&nbsp;
           </td>
         </tr>
+<<<<<<< HEAD
         <?php
           if ($sales != null) {
             if($i == 0)
@@ -84,11 +101,14 @@
             
           }
           ?>
+=======
+>>>>>>> 3dde02f52e6cdaf56045571b8234863252a60a1e
         @endforeach
       </tbody>
     </table>
   </div><br>
 
+<<<<<<< HEAD
   @if($sales != null && $varJsSales != null)
     <script type="text/javascript">
         var sales = JSON.parse('<?php echo $varJsSales; ?>');
@@ -98,5 +118,9 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
   <script src="{{ asset('/js/chart-bar-demo.js') }}"></script>
+=======
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+  <script src="{{ asset('/js/chart-area-demo.js') }}"></script>
+>>>>>>> 3dde02f52e6cdaf56045571b8234863252a60a1e
 
   @endsection
