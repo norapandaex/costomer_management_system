@@ -10,12 +10,19 @@ class Site extends Model
         'id',
         'costomer_id',
     ];
-    
-    public function costomer(){
+
+    public function costomer()
+    {
         return $this->belongsTo(Costomer::class);
     }
-    
-    public function pvs(){
+
+    public function pvs()
+    {
         return $this->hasMany(Pv::class);
+    }
+
+    public function sales()
+    {
+        return $this->hasMany(Sales::class);
     }
 }
