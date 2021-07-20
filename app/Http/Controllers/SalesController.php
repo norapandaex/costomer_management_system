@@ -13,28 +13,17 @@ class SalesController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
-        $sales = new \App\Sales;
+        $sales = \App\Salesgraph::orderBy('month', 'asc')->get();
 
-        list($sales, $counts) = $sales->get_sales();
+        //list($sales, $counts) = $sales->get_sales();
 
         return view('sales.index', [
             'sales' => $sales,
-            'i' => 0,
-            'counts' => $counts,
+            //'counts' => $counts,
         ]);
     }
 
 
-=======
-        $sales = \App\Sales::all();
-
-        return view('sales.index', [
-            'sales' => $sales,
-        ]);
-    }
-
->>>>>>> 3dde02f52e6cdaf56045571b8234863252a60a1e
     /**
      * Store a newly created resource in storage.
      *
@@ -54,6 +43,10 @@ class SalesController extends Controller
             'operating_month' => $request->operating_month,
             'sum_cost' => $sum,
         ]);
+
+        $salesgraph = new \App\Salesgraph;
+
+        $salesgraph->create_date($request, $id);
 
         return redirect()->route('sales.edit', ['id' => $id]);
     }
@@ -118,7 +111,11 @@ class SalesController extends Controller
 
         $sales->save();
 
+        $salesgraph = new \App\Salesgraph;
+
         $id = $sales->site_id;
+
+        $salesgraph->update_date($request, $id);
 
         return redirect()->route('sales.edit', ['id' => $id]);
     }

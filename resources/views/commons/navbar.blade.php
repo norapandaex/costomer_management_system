@@ -20,9 +20,8 @@
 
                 <div class="sb-sidenav-menu-heading">売り上げ管理</div>
                 {!! link_to_route('sales.index', '一覧', [], ['class' => 'nav-link']) !!}
-                {!! link_to_route('sites.create', '登録', [], ['class' => 'nav-link']) !!}
 
-
+                <br>
                 {!! link_to_route('signup.get', 'ユーザ登録', [], ['class' => 'nav-link']) !!}
 
                 {!! link_to_route('logout.get', 'ログアウト', [], ['class' => 'nav-link']) !!}

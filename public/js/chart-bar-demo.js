@@ -9,7 +9,7 @@ var myLineChart = new Chart(ctx, {
   data: {
     labels: months,
     datasets: [{
-      label: "Revenue",
+      label: "売り上げ",
       backgroundColor: "rgba(2,117,216,1)",
       borderColor: "rgba(2,117,216,1)",
       data: sales,
@@ -31,7 +31,7 @@ var myLineChart = new Chart(ctx, {
       yAxes: [{
         ticks: {
           min: 0,
-          max: 500000,
+          max: max,
           maxTicksLimit: 10
         },
         gridLines: {

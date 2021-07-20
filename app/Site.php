@@ -25,4 +25,9 @@ class Site extends Model
     {
         return $this->hasMany(Sales::class);
     }
+
+    public function salesgraphs()
+    {
+        return $this->hasMany(Salesgraph::class);
+    }
 }

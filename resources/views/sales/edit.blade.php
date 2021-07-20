@@ -56,12 +56,16 @@
         <table class="table table-bordered table-hover">
           <tbody>
             <tr>
+              <th>製作費売り上げ月</th>
+              <td><input type="month" name="production_month" class="form-control" value=""></td>
+            </tr>
+            <tr>
               <th>製作費</th>
               <td>{!! Form::text('production_cost', $site->production_cost, ['class' => 'form-control']) !!}</td>
             </tr>
             <tr>
               <th>運営費開始月</th>
-              <td><input type="month" name="month" class="form-control" value="{{ $site->month }}"></td>
+              <td><input type="month" name="operating_month" class="form-control" value="{{ $site->month }}"></td>
             </tr>
             <tr>
               <th>運営費</th>
