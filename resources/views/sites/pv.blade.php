@@ -55,6 +55,9 @@
             </div><br><br>
 
             <div class="col-10 offset-1">
+                <?php 
+                $i = 0;
+                ?>
                 <table class="table table-bordered table-hover" id="schedules">
                     <thead>
                         <tr>
@@ -79,6 +82,18 @@
                         if (count($pvs) > 0) {
                             $pvdata[] = $pv->pv;
                             $daydata[] = $pv->day;
+
+                            if($i == 0)
+                            {
+                            $pv = $pv->pv;
+                            $max = $pv->pv;
+                            $i++;
+                            }
+
+                            if($max < $pv){
+                                $max = $pv;
+                            }
+
                             $varJsPv = json_encode($pvdata);
                             $varJsDay = json_encode($daydata);
                         }
@@ -95,6 +110,7 @@
 <script type="text/javascript">
     var pvs = JSON.parse('<?php echo $varJsPv; ?>');
     var days = JSON.parse('<?php echo $varJsDay; ?>');
+    var max = JSON.parse('<?php echo $max; ?>');
 </script>
 @endif
 
