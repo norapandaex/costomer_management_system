@@ -85,13 +85,15 @@
 
                             if($i == 0)
                             {
-                            $pv = $pv->pv;
                             $max = $pv->pv;
-                            $i++;
+                            $i = 1;
                             }
 
-                            if($max < $pv){
-                                $max = $pv;
+                            if($i == 1){
+                                $pv = $pv->pv;
+                                if($max < $pv){
+                                    $max = $pv;
+                                }
                             }
 
                             $varJsPv = json_encode($pvdata);
