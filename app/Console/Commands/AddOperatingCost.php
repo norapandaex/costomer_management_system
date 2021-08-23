@@ -45,7 +45,7 @@ class AddOperatingCost extends Command
 
         //$today = Carbon::now();
 
-        $today = new Carbon('2021-07-01');
+        $today = new Carbon('2021-10-01');
 
         if ($today->day == 1) {
             for ($i = 1; $i <= $count; $i++) {
@@ -85,11 +85,9 @@ class AddOperatingCost extends Command
                                 'sum_cost' => $salesgraph->operating_cost,
                             ]);
                             //echo $sale . $salesgraph . $value . '月';
-                            echo '登録';
                         }
                     } else {
                         //echo $sale . $salesgraph;
-                        echo '登録済み';
                     }
                 }
             }

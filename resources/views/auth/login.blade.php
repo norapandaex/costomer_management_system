@@ -1,5 +1,9 @@
 @extends('layouts.login_app')
 
+@section('js')
+
+@endsection
+
 @section('content')
     <div class="text-center">
         <h1>Log in</h1>
@@ -23,7 +27,6 @@
 
                 {!! Form::submit('Log in', ['class' => 'btn btn-primary btn-block']) !!}
             {!! Form::close() !!}
-            
         </div>
     </div>
 @endsection
