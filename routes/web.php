@@ -61,6 +61,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     //売り上げ
     Route::get('sales/index', 'SalesController@index')->name('sales.index');
+    Route::post('sales/month', 'SalesController@month')->name('sales.month');
+    Route::get('sales/year', 'SalesController@year')->name('sales.year');
     Route::get('sales/edit/{id}', 'SalesController@edit')->name('sales.edit');
     Route::put('sales/update/{id}', 'SalesController@update')->name('sales.update');
     Route::post('sales/store/{id}', 'SalesController@store')->name('sales.store');

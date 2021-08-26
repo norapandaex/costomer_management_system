@@ -16,10 +16,25 @@
   <div class="col-10 offset-1">
     <div class="card mb-4">
       <div class="card-header">
-        <i class="fas fa-chart-area mr-1"></i>
-        売り上げ表
-      </div>
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a href="{{ route('sales.index', []) }}" class="nav-link {{ Request::routeIs('sales.index') ? 'active' : '' }}">月別売り上げ</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('sales.year', []) }}" class="nav-link {{ Request::routeIs('sales.year') ? 'active' : '' }}">年別売り上げ</a>
+            </li>
+        </ul>
+    </div>
       <div class="card-body">
+        {!! Form::open(['route' => ['sales.month']]) !!}
+          <select class="form-control" name="year" style="width: 100px; margin: 0 0 0 auto;"  onchange="submit(this.form)">
+            <option selected>{{$this_year}}</option>
+            @foreach ($years as $year)
+            <option value="{{$year}}">{{$year}}</option>
+            @endforeach
+          </select>
+          {!! Form::close() !!}
+        <div class="col-12">&nbsp;</div>
         <canvas id="myBarChart" width="100%" height="40"></canvas>
       </div>
     </div>
@@ -52,48 +67,54 @@
         </tr>
         <?php
           if ($sales != null) {
-            if($i == 0)
-            {
-              $month1 = $sale->month;
-              $month2 = null;
-              $sales_data = array();
-              $month_data = array();
-              $cost2 = 0;
-              $cost = $sale->sum_cost;
+            if(count($sales) == 1){
+              $varJsSales = json_encode($sale->sum_cost);
+              $varJsMonth = json_encode($sale->month);
               $max = $sale->sum_cost;
-              $i++;
             } else {
-              $month2 = $sale->month;
-              $m[] = $sale->month;
-              $cost2 = $sale->sum_cost;
-              $i++;
-            }
-
-            if($i > 1){
-              if($month1 == $month2){
-                $cost = $cost + $cost2;
+              if($i == 0)
+              {
+                $month1 = $sale->month;
+                $month2 = null;
+                $sales_data = array();
+                $month_data = array();
+                $cost2 = 0;
+                $cost = $sale->sum_cost;
+                $max = $sale->sum_cost;
+                $i++;
               } else {
-                $sales_data[] = $cost;
-                $month_data[] = $month1;
-                $cost = $cost2;
-                $month1 = $month2;
+                $month2 = $sale->month;
+                $m[] = $sale->month;
+                $cost2 = $sale->sum_cost;
+                $i++;
               }
 
-              if($i == $counts){
-                $sales_data[] = $cost;
-                $month_data[] = $month1;
-              }
+              if($i > 1){
+                if($month1 == $month2){
+                  $cost = $cost + $cost2;
+                } else {
+                  $sales_data[] = $cost;
+                  $month_data[] = $month1;
+                  $cost = $cost2;
+                  $month1 = $month2;
+                }
 
-              if($max < $cost){
-                $max = $cost;
+                if($i == $counts){
+                  $sales_data[] = $cost;
+                  $month_data[] = $month1;
+                }
+
+                if($max < $cost){
+                  $max = $cost;
+                }
+                
+                if(count($sales_data) > 1){
+                  $varJsSales = json_encode($sales_data);
+                  $varJsMonth = json_encode($month_data);
+                }
               }
-              
-              if(count($sales_data) > 1){
-                $varJsSales = json_encode($sales_data);
-                $varJsMonth = json_encode($month_data);
-              }
+              //var_dump($cost, $month1, $i, $counts, $sales_data, $month_data);
             }
-            //var_dump($cost, $month1, $i, $counts, $sales_data, $month_data);
             
           }
           ?>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class SalesController extends Controller
 {
@@ -15,11 +16,53 @@ class SalesController extends Controller
     {
         $sales = \App\Salesgraph::orderBy('month', 'asc')->get();
 
-        //list($sales, $counts) = $sales->get_sales();
+        $salesgraph = new \App\Salesgraph;
+
+        list($salesyears, $years) = $salesgraph->create_year();
+
+        $dt = new Carbon();
+        $this_year = $dt->year;
 
         return view('sales.index', [
             'sales' => $sales,
+            'years' => $years,
+            'this_year' => $this_year,
             //'counts' => $counts,
+        ]);
+    }
+
+    public function month(Request $request)
+    {
+        $sales = \App\Salesgraph::where('month', 'like', "%$request->year%")->get();
+        //dd($sales);
+
+        $salesgraph = new \App\Salesgraph;
+
+        list($salesyears, $years) = $salesgraph->create_year();
+
+        $dt = new Carbon();
+        $this_year = $dt->year;
+
+        return view('sales.index', [
+            'sales' => $sales,
+            'years' => $years,
+            'this_year' => $this_year,
+            //'counts' => $counts,
+        ]);
+    }
+
+    public function year()
+    {
+        $sales = \App\Salesgraph::orderBy('month', 'asc')->get();
+
+        $salesgraph = new \App\Salesgraph;
+
+        list($salesyears, $years) = $salesgraph->create_year();
+
+        return view('sales.year', [
+            'sales' => $sales,
+            'salesyear' => $salesyears,
+            'years' => $years,
         ]);
     }
 

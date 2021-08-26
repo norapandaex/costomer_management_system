@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Console\Commands\AddOperatingCost;
+use Carbon\Carbon;
 
 class Salesgraph extends Model
 {
@@ -138,5 +139,46 @@ class Salesgraph extends Model
         //         }
         //     }
         // }
+    }
+
+    public function create_year()
+    {
+        $salesgraphs = \App\Salesgraph::orderBy('month', 'asc')->get();
+        $year1 = 0;
+        $sale = 0;
+        $data = count($salesgraphs);
+
+        while ($data != 0) {
+            $count = 0;
+            foreach ($salesgraphs as $salesgraph) {
+                if ($count == 0) {
+                    $month1 = new Carbon($salesgraph->month);
+                    $year1 = $month1->year;
+                    $years[] = $year1;
+                    $sale = $salesgraph->sum_cost;
+                    $salesgraphs2 = [];
+                    $count++;
+                } else {
+                    $month2 = new Carbon($salesgraph->month);
+                    $year2 = $month2->year;
+
+                    if ($year1 == $year2) {
+                        $sale = $sale + $salesgraph->sum_cost;
+                    } else {
+                        $salesgraphs2[] = $salesgraph;
+                    }
+                    $count++;
+                }
+
+                if ($count == $data) {
+                    $salesyears[] = $sale;
+                    $salesgraphs = $salesgraphs2;
+                    $data = count($salesgraphs);
+                }
+            }
+        }
+        //dd($data, $salesgraphs, $sales, $years);
+
+        return [$salesyears, $years];
     }
 }
