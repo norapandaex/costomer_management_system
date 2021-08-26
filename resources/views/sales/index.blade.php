@@ -68,8 +68,10 @@
         <?php
           if ($sales != null) {
             if(count($sales) == 1){
-              $varJsSales = json_encode($sale->sum_cost);
-              $varJsMonth = json_encode($sale->month);
+              $sales_data[] = $sale->sum_cost;
+              $month_data[] = $sale->month;
+              $varJsSales = json_encode($sales_data);
+              $varJsMonth = json_encode($month_data);
               $max = $sale->sum_cost;
             } else {
               if($i == 0)
@@ -123,7 +125,7 @@
     </table>
   </div><br>
 
-  @if($sales != null && $i > 1)
+  @if($sales != null && $i > 1 || count($sales) == 1)
     <script type="text/javascript">
         var sales = JSON.parse('<?php echo $varJsSales; ?>');
         var months = JSON.parse('<?php echo $varJsMonth; ?>');

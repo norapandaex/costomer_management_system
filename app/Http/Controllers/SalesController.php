@@ -14,14 +14,14 @@ class SalesController extends Controller
      */
     public function index()
     {
-        $sales = \App\Salesgraph::orderBy('month', 'asc')->get();
+        $dt = new Carbon();
+        $this_year = $dt->year;
+
+        $sales = \App\Salesgraph::where('month', 'like', "%$this_year%")->orderBy('month', 'asc')->get();
 
         $salesgraph = new \App\Salesgraph;
 
         list($salesyears, $years) = $salesgraph->create_year();
-
-        $dt = new Carbon();
-        $this_year = $dt->year;
 
         return view('sales.index', [
             'sales' => $sales,
@@ -33,15 +33,14 @@ class SalesController extends Controller
 
     public function month(Request $request)
     {
-        $sales = \App\Salesgraph::where('month', 'like', "%$request->year%")->get();
+        $sales = \App\Salesgraph::where('month', 'like', "%$request->year%")->orderBy('month', 'asc')->get();
         //dd($sales);
 
         $salesgraph = new \App\Salesgraph;
 
         list($salesyears, $years) = $salesgraph->create_year();
 
-        $dt = new Carbon();
-        $this_year = $dt->year;
+        $this_year = $request->year;
 
         return view('sales.index', [
             'sales' => $sales,
