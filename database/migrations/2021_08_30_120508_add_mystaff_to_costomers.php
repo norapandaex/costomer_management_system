@@ -14,7 +14,7 @@ class AddMystaffToCostomers extends Migration
     public function up()
     {
         Schema::table('costomers', function (Blueprint $table) {
-            $table->string('mystaff');
+            $table->string('mystaff')->nullable();
         });
     }
 

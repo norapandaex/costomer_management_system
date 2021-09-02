@@ -14,7 +14,9 @@ class AddColumnToSalesgraphs extends Migration
     public function up()
     {
         Schema::table('salesgraphs', function (Blueprint $table) {
-            //
+            $table->string('sponser');
+            $table->string('addition');
+            $table->string('system');
         });
     }
 
@@ -26,7 +28,9 @@ class AddColumnToSalesgraphs extends Migration
     public function down()
     {
         Schema::table('salesgraphs', function (Blueprint $table) {
-            //
+            $table->dropColumn('sponser');
+            $table->dropColumn('addition');
+            $table->dropColumn('system');
         });
     }
 }
