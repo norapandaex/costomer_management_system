@@ -3,10 +3,10 @@
 @section('content')
 <h1 class="mt-4">サイト詳細</h1>
 <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item active">Schedule</li>
+    <li class="breadcrumb-item active">Site</li>
 </ol>
 <div class="row align-items-center">
-    <div class="col-8 offset-2">
+    <div class="col-10 offset-1">
         <div class="card text-center">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
@@ -37,6 +37,10 @@
                             <td><a href="{{ $site->url }}">{{ $site->url }}</a></td>
                         </tr>
                         <tr>
+                            <th>サイトURL</th>
+                            <td><a href="{{ $site->analytics }}">{{ $site->analytics }}</a></td>
+                        </tr>
+                        <tr>
                             <th>公開日</th>
                             <td>{{ $site->open }}</td>
                         </tr>
@@ -65,8 +69,10 @@
                             <td>{{ $site->operating_cost }}</td>
                         </tr>
                         <tr>
-                            <th>スポンサー費</th>
-                            <td>{{ $site->sponsor_cost }}</td>
+                            <th>契約内容</th>
+                            <td>
+                                <p class="mb-0" style="text-align: left;">{!! nl2br(e($site->contract)) !!}</p>
+                            </td>
                         </tr>
                     </tbody>
                 </table><br>

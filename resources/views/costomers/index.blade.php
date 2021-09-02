@@ -16,7 +16,8 @@
                 <th>チーム名</th>
                 <th>カテゴリー</th>
                 <th>都道府県</th>
-                <th>担当者</th>
+                <th>顧客担当者</th>
+                <th>弊社担当者</th>
                 <th>メールアドレス</th>
                 <th>電話番号</th>
                 <th>詳細</th>
@@ -51,8 +52,9 @@
                 </td>
                 <td>{{ $costomer->prefecture }}</td>
                 <td>{{ $costomer->staff }}</td>
+                <td>{{ $costomer->mystaff }}</td>
                 <th>{{ $costomer->email }}</th>
-                <th>{{ $costomer->tel }}</th>
+                <th style="max-width: 80px;">{{ $costomer->tel }}</th>
                 <td>{!! link_to_route('costomers.show', '詳細', ['costomer' => $costomer->id], ['class' => 'btn btn-primary']) !!}</td>
             </tr>
             @endforeach

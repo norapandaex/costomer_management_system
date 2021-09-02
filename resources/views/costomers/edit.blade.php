@@ -49,8 +49,13 @@
                 </div>
                 
                 <div class="form-group">
-                    {!! Form::label('staff', '担当者名') !!}
+                    {!! Form::label('staff', '顧客担当者名') !!}
                     {!! Form::text('staff', $costomer->staff, ['class' => 'form-control']) !!}
+                </div>
+
+                <div class="form-group">
+                    {!! Form::label('mystaff', '弊社担当者名') !!}
+                    {!! Form::text('mystaff', $costomer->mystaff, ['class' => 'form-control']) !!}
                 </div>
                 
                 <div class="form-row align-items-center">

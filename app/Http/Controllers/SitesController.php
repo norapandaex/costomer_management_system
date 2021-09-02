@@ -55,6 +55,7 @@ class SitesController extends Controller
         $costomer->sites()->create([
             'name' => $request->name,
             'url' => $request->url,
+            'analytics' => $request->analytics,
             'contract_day' => $request->contract_day,
             'inside_staff' => $request->inside_staff,
             'outside_staff' => $request->outside_staff,
@@ -62,8 +63,8 @@ class SitesController extends Controller
             'open' => $request->open,
             'production_cost' => $request->production_cost,
             'operating_cost' => $request->operating_cost,
-            'sponsor_cost' => $request->sponsor_cost,
             'costomer_id' => $request->costomer_id,
+            'contract' => $request->contract,
         ]);
 
         //\App\Site::create($request->all());
@@ -118,6 +119,7 @@ class SitesController extends Controller
 
         $site->name = $request->name;
         $site->url = $request->url;
+        $site->analytics = $request->analytics;
         $site->contract_day = $request->contract_day;
         $site->inside_staff = $request->inside_staff;
         $site->outside_staff = $request->outside_staff;
@@ -125,8 +127,8 @@ class SitesController extends Controller
         $site->open = $request->open;
         $site->production_cost = $request->production_cost;
         $site->operating_cost = $request->operating_cost;
-        $site->sponsor_cost = $request->sponsor_cost;
         $site->costomer_id = $request->costomer_id;
+        $site->contract = $request->contract;
 
         $site->save();
 

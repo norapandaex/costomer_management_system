@@ -18,6 +18,7 @@ class SalesController extends Controller
         $this_year = $dt->year;
 
         $sales = \App\Salesgraph::where('month', 'like', "%$this_year%")->orderBy('month', 'asc')->get();
+        $sites = \App\Site::all();
 
         $salesgraph = new \App\Salesgraph;
 
@@ -27,25 +28,35 @@ class SalesController extends Controller
             'sales' => $sales,
             'years' => $years,
             'this_year' => $this_year,
+            'sites' => $sites,
+            'cos' => 0,
             //'counts' => $counts,
         ]);
     }
 
     public function month(Request $request)
     {
-        $sales = \App\Salesgraph::where('month', 'like', "%$request->year%")->orderBy('month', 'asc')->get();
-        //dd($sales);
+        if ($request->site == 0) {
+            $sales = \App\Salesgraph::where('month', 'like', "%$request->year%")->orderBy('month', 'asc')->get();
+            $sites = \App\Site::all();
+        } else if ($request->site != 0) {
+            $sales = \App\Salesgraph::where('month', 'like', "%$request->year%")->where('site_id', "$request->site")->orderBy('month', 'asc')->get();
+            $sites = \App\Site::all();
+        }
 
         $salesgraph = new \App\Salesgraph;
 
         list($salesyears, $years) = $salesgraph->create_year();
 
         $this_year = $request->year;
+        $cos = $request->site;
 
         return view('sales.index', [
             'sales' => $sales,
             'years' => $years,
             'this_year' => $this_year,
+            'sites' => $sites,
+            'cos' => $cos,
             //'counts' => $counts,
         ]);
     }

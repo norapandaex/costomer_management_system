@@ -47,12 +47,14 @@ class CostomersController extends Controller
         $costomers->relation = $request->relation;
         $costomers->category = $request->category;
         $costomers->staff = $request->staff;
+        $costomers->mystaff = $request->mystaff;
         $costomers->address = $request->address;
         $costomers->prefecture = $request->prefecture;
         $costomers->city = $request->city;
         $costomers->other = $request->other;
         $costomers->email = $request->email;
         $costomers->tel = $request->tel;
+        $costomers->contract = $request->contract;
         $costomers->save();
 
 
@@ -72,7 +74,9 @@ class CostomersController extends Controller
 
         $sites = $costomer->sites;
 
-        return view('costomers.show', ['costomer' => $costomer, 'sites' => $sites]);
+        $sponsers = \App\Sponser::where('costomer_id', "$id")->get();
+
+        return view('costomers.show', ['costomer' => $costomer, 'sites' => $sites, 'count' => count($sponsers),]);
     }
 
     /**
@@ -103,10 +107,11 @@ class CostomersController extends Controller
 
         $costomer = \App\Costomer::findOrFail($id);
 
-        $costomer->team_name = $request->team_name;
+        $costomer->name = $request->team_name;
         $costomer->relation = $request->relation;
         $costomer->category = $request->category;
         $costomer->staff = $request->staff;
+        $costomer->mystaff = $request->mystaff;
         $costomer->address = $request->address;
         $costomer->prefecture = $request->prefecture;
         $costomer->city = $request->city;
@@ -150,5 +155,145 @@ class CostomersController extends Controller
         }
 
         return view('costomers.meeting', ['schedules' => $schedules, 'costomer' => $costomer]);
+    }
+
+
+    public function sponser_index($id)
+    {
+        $costomer = \App\Costomer::find($id);
+
+        $sponsers = \App\Sponser::where('costomer_id', "$id")->get();
+
+        $data = [
+            'costomer' => $costomer,
+            'sponsers' => $sponsers,
+        ];
+
+        return view('costomers.sponser', $data);
+    }
+
+    public function sponser_create($id)
+    {
+        $costomer = \App\Costomer::find($id);
+
+        $data = [
+            'costomer' => $costomer,
+        ];
+
+        return view('costomers.sponser_create', $data);
+    }
+
+    public function sponser_store(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $costomer = \App\Costomer::find($id);
+
+        $costomer->sponsers()->create([
+            'name' => $request->name,
+            'cost' => $request->cost,
+            'rate' => $request->rate,
+            'start' => $request->start,
+            'stop' => $request->stop,
+        ]);
+
+        return redirect()->route('costomers.sponser', ['id' => $costomer]);
+    }
+
+    public function sponser_show($id)
+    {
+        $sponser = \App\Sponser::find($id);
+
+        $payments = \App\Payment::where('sponser_id', "$id")->get();
+
+        $sum = 0;
+
+        if (count($payments) != 0) {
+            foreach ($payments as $payment) {
+                $sum = $sum + $payment->amount;
+            }
+        }
+
+        $data = [
+            'sponser' => $sponser,
+            'sum' => $sum,
+        ];
+
+        return view('costomers.sponser_show', $data);
+    }
+
+    public function sponser_edit($id, $costomer)
+    {
+        $sponser = \App\Sponser::find($id);
+
+        $data = [
+            'sponser' => $sponser,
+            'id' => $costomer,
+        ];
+
+        return view('costomers.sponser_edit', $data);
+    }
+
+    public function sponser_update(Request $request, $id)
+    {
+        $sponser = \App\Sponser::find($id);
+
+        $sponser->name = $request->name;
+        $sponser->cost = $request->cost;
+        $sponser->rate = $request->rate;
+        $sponser->start = $request->start;
+        $sponser->stop = $request->stop;
+
+        $sponser->save();
+
+        return redirect()->route('costomers.sponser_show', ['id' => $id]);
+    }
+
+    public function sponser_destroy($id)
+    {
+        $sponser = \App\Sponser::findOrFail($id);
+
+        $id = $sponser->costomer_id;
+
+        $sponser->delete();
+
+        return redirect()->route('costomers.sponser', ['id' => $id]);
+    }
+
+    public function payment_index($id)
+    {
+        $sponser = \App\Sponser::findOrFail($id);
+
+        $payments = \App\Payment::where('sponser_id', "$sponser->id")->orderBy('day', 'asc')->get();
+
+        return view('costomers.payment', ['sponser' => $sponser, 'payments' => $payments]);
+    }
+
+    public function payment_store(Request $request, $id)
+    {
+        $request->validate([
+            'day' => 'required',
+            'amount' => 'required',
+        ]);
+
+        $sponser = \App\Sponser::findOrFail($id);
+
+        $sponser->payments()->create([
+            'day' => $request->day,
+            'amount' => $request->amount,
+        ]);
+
+        return redirect()->route('costomers.payment', ['id' => $id]);
+    }
+
+    public function payment_destroy($id, $sponser)
+    {
+        $payment = \App\Payment::findOrFail($id);
+
+        $payment->delete();
+
+        return redirect()->route('costomers.payment', ['id' => $sponser]);
     }
 }

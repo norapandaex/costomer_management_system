@@ -3,7 +3,7 @@
 @section('content')
 <h1 class="mt-4">サイト詳細</h1>
 <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item active">Schedule</li>
+    <li class="breadcrumb-item active">Site</li>
 </ol>
 <div class="row align-items-center">
     <div class="col-10 offset-1">

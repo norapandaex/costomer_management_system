@@ -3,7 +3,7 @@
 @section('content')
 <h1 class="mt-4">サイト情報登録</h1>
 <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item active">Schedule</li>
+    <li class="breadcrumb-item active">Site</li>
 </ol>
 @include('commons.error_messages')
 <div class="row">
@@ -19,6 +19,11 @@
         <div class="form-group col-10">
             {!! Form::label('url', 'サイトURL') !!}
             {!! Form::text('url', null, ['class' => 'form-control']) !!}
+        </div>
+
+        <div class="form-group col-10">
+            {!! Form::label('analytics', 'アクセス解析URL') !!}
+            {!! Form::text('analytics', null, ['class' => 'form-control']) !!}
         </div>
 
         <div class="form-group col-10">
@@ -56,20 +61,21 @@
             {!! Form::text('operating_cost', null, ['class' => 'form-control']) !!}
         </div>
 
-        <div class="form-group col-10">
-            {!! Form::label('sponsor_cost', 'スポンサー費') !!}
-            {!! Form::text('sponsor_cost', null, ['class' => 'form-control']) !!}
+        <div class="form-group">
+            {!! Form::label('contract', '契約内容') !!}
+            {!! Form::textarea('contract', null, ['class' => 'form-control','rows' => '10', 'FlexTextarea__textarea', 'id' => 'FlexTextarea']) !!}
         </div>
 
         <div class="form-group">
-            {!! Form::label('relation', 'チーム選択') !!}
+            {!! Form::label('relation', '顧客選択') !!}
             <table class="table table-bordered table-hover" id="sites">
                 <thead>
                     <tr>
-                        <th>チーム名</th>
+                        <th>顧客名</th>
                         <th>カテゴリー</th>
                         <th>都道府県</th>
-                        <th>担当者</th>
+                        <th>顧客担当者</th>
+                        <th>弊社担当者</th>
                         <th>メールアドレス</th>
                         <th>電話番号</th>
                         <th>詳細</th>
@@ -104,8 +110,9 @@
                         </td>
                         <td>{{ $costomer->prefecture }}</td>
                         <td>{{ $costomer->staff }}</td>
+                        <td>{{ $costomer->mystaff }}</td>
                         <th>{{ $costomer->email }}</th>
-                        <th>{{ $costomer->tel }}</th>
+                        <th  style="max-width: 80px;">{{ $costomer->tel }}</th>
                         <td><input type="radio" id="costomer{{ $costomer->id }}" name="costomer_id" value="{{ $costomer->id }}"><label for="costomer{{ $costomer->id }}">選択</label></td>
                     </tr>
                     @endforeach

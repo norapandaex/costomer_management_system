@@ -19,6 +19,9 @@
                     <li class="nav-item">
                         {!! link_to_route('proceedings.index', 'ミーティング議事録', ['id' => $costomer->id], ['class' => 'nav-link']) !!}
                     </li>
+                    <li class="nav-item">
+                        {!! link_to_route('costomers.sponser', 'スポンサー管理', ['id' => $costomer->id], ['class' => 'nav-link']) !!}
+                    </li>
                 </ul>
             </div><br>
 
@@ -70,14 +73,18 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>担当者</th>
+                            <th>顧客担当者</th>
                             <td>{{ $costomer->staff }}</td>
+                        </tr>
+                        <tr>
+                            <th>弊社担当者</th>
+                            <td>{{ $costomer->mystaff }}</td>
                         </tr>
                         <tr>
                             <th>運用サイト</th>
                             <td>
                                 @foreach($sites as $site)
-                                <a href="{{ $site->url }}">{{ $site->url }}</a>
+                                <a href="{{ $site->url }}">{{ $site->url }}</a>&nbsp;&nbsp;{!! link_to_route('sites.show', '詳細', ['site' => $site->id], ['class' => 'btn btn-primary btn-sm']) !!}<br>
                                 @endforeach
                             </td>
                         </tr>
@@ -92,6 +99,10 @@
                         <tr>
                             <th>電話番号</th>
                             <td>{{ $costomer->tel }}</td>
+                        </tr>
+                        <tr>
+                            <th>スポンサー数</th>
+                            <td>{{$count}}</td>
                         </tr>
                     </tbody>
                 </table><br>

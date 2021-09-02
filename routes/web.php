@@ -50,6 +50,20 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('sites/pv_update/{id}/{site}', 'SitesController@pv_update')->name('sites.pv_update');
     Route::delete('sites/pv_destroy/{id}/{site}', 'SitesController@pv_destroy')->name('sites.pv_destroy');
 
+    //スポンサー
+    Route::get('costomers/sponser/{id}', 'CostomersController@sponser_index')->name('costomers.sponser');
+    Route::get('costomers/sponser_create/{id}', 'CostomersController@sponser_create')->name('costomers.sponser_create');
+    Route::post('costomers/sponser_store/{id}', 'CostomersController@sponser_store')->name('costomers.sponser_store');
+    Route::get('costomers/sponser_show/{id}', 'CostomersController@sponser_show')->name('costomers.sponser_show');
+    Route::get('costomers/sponser_edit/{id}/{costomer}', 'CostomersController@sponser_edit')->name('costomers.sponser_edit');
+    Route::put('costomers/sponser_update/{id}', 'CostomersController@sponser_update')->name('costomers.sponser_update');
+    Route::delete('costomers/sponser_edit/{id}', 'CostomersController@sponser_destroy')->name('costomers.sponser_destroy');
+
+    //入金
+    Route::get('costomers/payment/{id}', 'CostomersController@payment_index')->name('costomers.payment');
+    Route::post('costomers/payment_store/{id}', 'CostomersController@payment_store')->name('costomers.payment_store');
+    Route::delete('costomers/payment_destroy/{id}/{sponser}', 'CostomersController@payment_destroy')->name('costomers.payment_destroy');
+
     //議事録
     Route::get('proceedings/index/{id}', 'ProceedingController@index')->name('proceedings.index');
     Route::get('proceedings/create/{id}', 'ProceedingController@create')->name('proceedings.create');

@@ -3,11 +3,11 @@
 @section('content')
     <h1 class="mt-4">サイト情報登録</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Schedule</li>
+        <li class="breadcrumb-item active">Site</li>
     </ol>
     @include('commons.error_messages')
     <div class="row">
-        <div class="col-sm-6 offset-sm-3">
+        <div class="col-sm-11">
 
             {!! Form::model($site, ['route' => ['sites.update', $site->id], 'method' => 'put']) !!}
                 
@@ -19,6 +19,11 @@
                 <div class="form-group">
                     {!! Form::label('url', 'サイトURL') !!}
                     {!! Form::text('url', $site->url, ['class' => 'form-control']) !!}
+                </div>
+
+                <div class="form-group">
+                    {!! Form::label('analytics', 'アクセス解析URL') !!}
+                    {!! Form::text('analytics', $site->analytics, ['class' => 'form-control']) !!}
                 </div>
                 
                 <div class="form-group">
@@ -55,20 +60,21 @@
                     {!! Form::label('operating_cost', '運営費') !!}
                     {!! Form::text('operating_cost', $site->operating_cost, ['class' => 'form-control']) !!}
                 </div>
-                
+
                 <div class="form-group">
-                    {!! Form::label('sponsor_cost', 'スポンサー費') !!}
-                    {!! Form::text('sponsor_cost', $site->sponsor_cost, ['class' => 'form-control']) !!}
+                    {!! Form::label('contract', '契約内容') !!}
+                    {!! Form::textarea('contract', $site->contract, ['class' => 'form-control','rows' => '10', 'FlexTextarea__textarea', 'id' => 'FlexTextarea']) !!}
                 </div>
                 
                 <div class="form-group">
-                    {!! Form::label('relation', 'チーム選択') !!}
+                    {!! Form::label('relation', '顧客選択') !!}
                     <table class="table table-bordered table-hover" id="schedules">
                         <thead>
                             <tr>
-                                <th>チーム名</th>
+                                <th>顧客名</th>
                                 <th>カテゴリー</th>
-                                <th>担当者</th>
+                                <th>顧客担当者</th>
+                                <th>弊社担当者</th>
                                 <th>メールアドレス</th>
                                 <th>電話番号</th>
                                 <th>詳細</th>
@@ -102,8 +108,9 @@
                                     @endif
                                 </td>
                                 <td>{{ $costomer->staff }}</td>
+                                <td>{{ $costomer->mystaff }}</td>
                                 <th>{{ $costomer->email }}</th>
-                                <th>{{ $costomer->tel }}</th>
+                                <th style="max-width: 80px;">{{ $costomer->tel }}</th>
                                 <td><input type="radio" id="dewey" name="costomer_id" value="{{ $costomer->id }}" @if($costomer->id == $site->costomer_id) checked @endif><label for="dewey">選択</label></td>
                             </tr>
                             @endforeach

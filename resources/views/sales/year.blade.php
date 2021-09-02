@@ -21,7 +21,7 @@
                 <a href="{{ route('sales.index', []) }}" class="nav-link {{ Request::routeIs('sales.index') ? 'active' : '' }}">月別売り上げ</a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('sales.year', []) }}" class="nav-link {{ Request::routeIs('sales.year') ? 'active' : '' }}">年別売り上げ</a>
+              <a href="{{ route('sales.year', []) }}" class="nav-link active">年別売り上げ</a>
             </li>
         </ul>
     </div>

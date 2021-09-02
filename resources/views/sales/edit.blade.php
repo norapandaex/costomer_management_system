@@ -6,7 +6,7 @@
   <li class="breadcrumb-item active">Schedule</li>
 </ol>
 <div class="row align-items-center">
-  <div class="col-8 offset-2">
+  <div class="col-10 offset-1">
     <div class="card text-center">
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
@@ -18,6 +18,9 @@
           </li>
           <li class="nav-item">
             {!! link_to_route('sales.edit', '売り上げ設定', ['id' => $site->id], ['class' => 'nav-link active']) !!}
+          </li>
+          <li class="nav-item">
+            {!! link_to_route('sites.sponser', 'スポンサー管理', ['id' => $site->id], ['class' => 'nav-link']) !!}
           </li>
         </ul>
       </div>

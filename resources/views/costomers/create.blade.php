@@ -49,8 +49,13 @@
                 </div>
                 
                 <div class="form-group">
-                    {!! Form::label('staff', '担当者名') !!}
+                    {!! Form::label('staff', '顧客担当者名') !!}
                     {!! Form::text('staff', null, ['class' => 'form-control']) !!}
+                </div>
+
+                <div class="form-group">
+                    {!! Form::label('mystaff', '弊社担当者名') !!}
+                    {!! Form::text('mystaff', null, ['class' => 'form-control']) !!}
                 </div>
                 
                 <div class="form-row align-items-center">
@@ -94,6 +99,11 @@
                         <label for="tel">電話番号</label>
                         <input type="text" class="form-control" id="tel" name="tel">
                     </div>
+                </div>
+
+                <div class="form-group">
+                    {!! Form::label('contract', '契約内容') !!}
+                    {!! Form::textarea('contract', null, ['class' => 'form-control','rows' => '10', 'FlexTextarea__textarea', 'id' => 'FlexTextarea']) !!}
                 </div>
 
                 {!! Form::submit('登録', ['class' => 'btn btn-primary btn-block']) !!}

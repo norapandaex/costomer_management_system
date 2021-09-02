@@ -24,4 +24,9 @@ class Costomer extends Model
     {
         return $this->hasMany(Schedule::class);
     }
+
+    public function sponsers()
+    {
+        return $this->hasMany(Sponser::class);
+    }
 }
