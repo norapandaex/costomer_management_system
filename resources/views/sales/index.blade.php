@@ -16,51 +16,71 @@
   <div class="col-10 offset-1">
     <ul class="nav nav-tabs nav-justified mb-3">
       <li class="nav-item">
-          <a href="#" class="nav-link active">
-              HP事業部全体
-          </a>
+        <a href="{{ route('sales.index', []) }}" class="nav-link {{ Request::routeIs('sales.index') ? 'active' : '' }} {{ Request::routeIs('sales.month') ? 'active' : '' }}">HP事業部全体</a>
       </li>
       <li class="nav-item">
-          <a href="#" class="nav-link">
-              製作費
-          </a>
+        <a href="{{ route('sales.production', []) }}" class="nav-link {{ Request::routeIs('sales.production') ? 'active' : '' }} {{ Request::routeIs('sales.production_month') ? 'active' : '' }}">製作費</a>
       </li>
       <li class="nav-item">
-          <a href="#" class="nav-link">
-              運営費
-          </a>
+        <a href="{{ route('sales.operating', []) }}" class="nav-link {{ Request::routeIs('sales.operating') ? 'active' : '' }} {{ Request::routeIs('sales.operating_month') ? 'active' : '' }}">運営費</a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link" style="font-size: 15px;">
-          スポンサー手数料
-        </a>
+        <a href="{{ route('sales.sponser', []) }}" class="nav-link {{ Request::routeIs('sales.sponser') ? 'active' : '' }} {{ Request::routeIs('sales.sponser_month') ? 'active' : '' }}" style="font-size: 15px;">スポンサー手数料</a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">
-            追加作業費
-        </a>
+        <a href="{{ route('sales.addition', []) }}" class="nav-link {{ Request::routeIs('sales.addition') ? 'active' : '' }} {{ Request::routeIs('sales.addition_month') ? 'active' : '' }}">追加作業費</a>
       </li>
       <li class="nav-item">
           <a href="#" class="nav-link">
             システム構築費
           </a>
       </li>
-  </ul>
+    </ul>
     <div class="card mb-4">
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-                <a href="{{ route('sales.index', []) }}" class="nav-link active">月別売り上げ</a>
+              @if(Request::routeIs('sales.index')|| Request::routeIs('sales.month'))
+                <a href="{{ route('sales.index', []) }}" class="nav-link {{ Request::routeIs('sales.index') ? 'active' : '' }}">月別売り上げ</a>
+              @elseif(Request::routeIs('sales.production') || Request::routeIs('sales.production_month'))
+                <a href="{{ route('sales.production', []) }}" class="nav-link {{ Request::routeIs('sales.production') ? 'active' : '' }}">月別売り上げ</a>
+              @elseif(Request::routeIs('sales.operating') || Request::routeIs('sales.operating_month'))
+                <a href="{{ route('sales.operating', []) }}" class="nav-link {{ Request::routeIs('sales.operating') ? 'active' : '' }}">月別売り上げ</a>
+              @elseif(Request::routeIs('sales.sponser') || Request::routeIs('sales.sponser_month'))
+                <a href="{{ route('sales.sponser', []) }}" class="nav-link {{ Request::routeIs('sales.sponser') ? 'active' : '' }}">月別売り上げ</a>
+              @elseif(Request::routeIs('sales.addition') || Request::routeIs('sales.addition_month'))
+                <a href="{{ route('sales.addition', []) }}" class="nav-link {{ Request::routeIs('sales.addition') ? 'active' : '' }}">月別売り上げ</a>
+              @endif
             </li>
             <li class="nav-item">
+              @if(Request::routeIs('sales.index') || Request::routeIs('sales.month'))
                 <a href="{{ route('sales.year', []) }}" class="nav-link {{ Request::routeIs('sales.year') ? 'active' : '' }}">年別売り上げ</a>
+              @elseif(Request::routeIs('sales.production') || Request::routeIs('sales.production_month'))
+                <a href="{{ route('sales.production_year', []) }}" class="nav-link {{ Request::routeIs('sales.production_year') ? 'active' : '' }}">年別売り上げ</a>
+              @elseif(Request::routeIs('sales.operating') || Request::routeIs('sales.operating_month'))
+                <a href="{{ route('sales.operating_year', []) }}" class="nav-link {{ Request::routeIs('sales.operating_year') ? 'active' : '' }}">年別売り上げ</a>
+              @elseif(Request::routeIs('sales.sponser') || Request::routeIs('sales.sponser_month'))
+                <a href="{{ route('sales.sponser_year', []) }}" class="nav-link {{ Request::routeIs('sales.sponser_year') ? 'active' : '' }}">年別売り上げ</a>
+              @elseif(Request::routeIs('sales.addition') || Request::routeIs('sales.addition_month'))
+                <a href="{{ route('sales.addition_year', []) }}" class="nav-link {{ Request::routeIs('sales.addition_year') ? 'active' : '' }}">年別売り上げ</a>
+              @endif
             </li>
         </ul>
     </div>
       <div class="card-body">
         <div class="form-group row">
           <div class="col-12">
-            {!! Form::open(['route' => ['sales.month']]) !!}
+            @if(Request::routeIs('sales.index') || Request::routeIs('sales.month'))
+              {!! Form::open(['route' => ['sales.month']]) !!}
+            @elseif(Request::routeIs('sales.production') || Request::routeIs('sales.production_month'))
+              {!! Form::open(['route' => ['sales.production_month']]) !!}
+            @elseif(Request::routeIs('sales.operating') || Request::routeIs('sales.operating_month'))
+              {!! Form::open(['route' => ['sales.operating_month']]) !!}
+            @elseif(Request::routeIs('sales.sponser') || Request::routeIs('sales.sponser_month'))
+              {!! Form::open(['route' => ['sales.sponser_month']]) !!}
+            @elseif(Request::routeIs('sales.addition') || Request::routeIs('sales.addition_month'))
+              {!! Form::open(['route' => ['sales.addition_month']]) !!}
+            @endif
 
               <select class="form-control" name="year" style="width: 100px; margin: 0 0 0 auto;" onchange="submit(this.form)">
                 <option selected>{{$this_year}}</option>
@@ -69,12 +89,21 @@
                 @endforeach
               </select>
             
+            @if(Request::routeIs('sales.sponser') || Request::routeIs('sales.sponser_month'))
+              <select class="form-control" name="costomer" style="width: 120px; margin: 0 0 0 auto;" onchange="submit(this.form)">
+                <option value="0" {{ $cos == 0 ? 'selected' : '' }}>全て</option>
+                @foreach ($costomers as $costomer)
+                <option value="{{$costomer->id}}" {{ $costomer->id == $cos ? 'selected' : '' }}>{{$costomer->name}}</option>
+                @endforeach
+              </select>
+            @else
               <select class="form-control" name="site" style="width: 120px; margin: 0 0 0 auto;" onchange="submit(this.form)">
                 <option value="0" {{ $cos == 0 ? 'selected' : '' }}>全て</option>
                 @foreach ($sites as $site)
                 <option value="{{$site->id}}" {{ $site->id == $cos ? 'selected' : '' }}>{{$site->name}}</option>
                 @endforeach
               </select>
+            @endif
 
             {!! Form::close() !!}
           </div>
@@ -113,16 +142,68 @@
         @foreach($sales as $sale)
         <tr>
           <td>{{ $sale->month }}</td>
-          <td>{{ $sale->site->costomer->name }}</td>
-          <td>{{ $sale->site->name }}</td>
-          <td>{{ $sale->production_cost }}</td>
-          <td>{{ $sale->operating_cost }}</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
+          <td>
+            @if($sale->site_id != null)
+              {{ $sale->site->costomer->name }}
+            @elseif($sale->payment_id != null)
+              {{ $sale->payment->sponser->costomer->name }}
+            @elseif($sale->addition_id != null)
+              {{$sale->addition->site->name}}
+            @endif
+          </td>
+          <td>
+            @if($sale->site_id != null)
+              {{ $sale->site->name }}
+            @elseif($sale->addition_id != null)
+              {{$sale->addition->site->costomer->name}}
+            @else
+              -
+            @endif
+          </td>
+          <td>
+            @if($sale->production_cost != null)
+              {{ $sale->production_cost }}
+            @else
+              -
+            @endif
+          </td>
+          <td>
+            @if($sale->operating_cost != null)
+              {{ $sale->operating_cost }}
+            @else
+              -
+            @endif
+          </td>
+          <td>
+            @if($sale->sponserc != null)
+              {{ $sale->sponserc }}
+            @else
+              -
+            @endif
+          </td>
+          <td>
+            @if($sale->additionc != null)
+              {{ $sale->additionc }}
+            @else
+              -
+            @endif
+          </td>
+          <td>
+            @if($sale->systemc != null)
+              {{ $sale->systemc }}
+            @else
+              -
+            @endif
+          </td>
           <td>{{ $sale->sum_cost }}</td>
           <td>
-            {!! link_to_route('sales.edit', '編集', ['id' => $sale->site_id], ['class' => 'btn btn-primary']) !!}&nbsp;&nbsp;
+            @if($sale->site_id != null)
+              {!! link_to_route('sales.edit', '編集', ['id' => $sale->site_id], ['class' => 'btn btn-primary']) !!}
+            @elseif($sale->payment_id != null)
+              {!! link_to_route('costomers.payment', '編集', ['id' => $sale->payment->sponser_id], ['class' => 'btn btn-primary']) !!}
+            @elseif($sale->addition_id != null)
+              {!! link_to_route('sales.addition_index', '編集', ['id' => $sale->addition->site_id], ['class' => 'btn btn-primary']) !!}
+            @endif
           </td>
         </tr>
         <?php
@@ -170,7 +251,7 @@
                   $max = $cost;
                 }
                 
-                if(count($sales_data) > 1){
+                if(count($sales_data) >= 1){
                   $varJsSales = json_encode($sales_data);
                   $varJsMonth = json_encode($month_data);
                 }

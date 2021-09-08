@@ -19,6 +19,9 @@
                     <li class="nav-item">
                         {!! link_to_route('sales.edit', '売り上げ設定', ['id' => $site->id], ['class' => 'nav-link']) !!}
                     </li>
+                    <li class="nav-item">
+                        {!! link_to_route('sales.addition_index', '追加作業費', ['id' => $site->id], ['class' => 'nav-link']) !!}
+                    </li>
                 </ul>
             </div>
             <div class="card-body">

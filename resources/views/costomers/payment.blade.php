@@ -38,7 +38,7 @@
           {!! Form::close() !!}
         </div>
         <div class="col-8">
-          <table class="table table-bordered table-hover" id="sales">
+          <table class="table table-bordered table-hover table-sm" id="sales">
             <thead>
                 <tr>
                     <th>入金日</th>
@@ -53,8 +53,8 @@
                     <td>{{$payment->amount}}</td>
                     <td>
                       {!! Form::open(['route' => ['costomers.payment_destroy', ['id' => $payment->id, 'sponser' => $sponser->id]], 'method' => 'delete']) !!}
-                      {{--{!! link_to_route('sites.pv_edit', '編集', ['id' => $pv->id, 'site' => $site->id], ['class' => 'btn btn-primary']) !!}--}}&nbsp;&nbsp;
-                      {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
+                      {!! link_to_route('costomers.payment_edit', '編集', ['id' => $payment->id], ['class' => 'btn btn-primary btn-sm']) !!}&nbsp;&nbsp;
+                      {!! Form::submit('削除', ['class' => 'btn btn-danger btn-sm']) !!}
                       {!! Form::close() !!}
                     </td>
                   </tr>

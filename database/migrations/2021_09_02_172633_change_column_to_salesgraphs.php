@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddMystaffToCostomers extends Migration
+class ChangeColumnToSalesgraphs extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddMystaffToCostomers extends Migration
      */
     public function up()
     {
-        Schema::table('costomers', function (Blueprint $table) {
-            $table->string('mystaff')->nullable();
+        Schema::table('salesgraphs', function (Blueprint $table) {
+            $table->unsignedBigInteger('site_id')->nullable()->change();
         });
     }
 
@@ -25,8 +25,8 @@ class AddMystaffToCostomers extends Migration
      */
     public function down()
     {
-        Schema::table('costomers', function (Blueprint $table) {
-            $table->dropColumn('mystaff');
+        Schema::table('salesgraphs', function (Blueprint $table) {
+            $table->unsignedBigInteger('site_id')->change();
         });
     }
 }

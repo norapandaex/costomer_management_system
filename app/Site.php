@@ -30,4 +30,9 @@ class Site extends Model
     {
         return $this->hasMany(Salesgraph::class);
     }
+
+    public function additions()
+    {
+        return $this->hasMany(Addition::class);
+    }
 }

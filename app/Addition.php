@@ -4,16 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class Addition extends Model
 {
     protected $guarded = [
         'id',
-        'sponser_id',
+        'site_id',
     ];
 
-    public function sponser()
+    public function site()
     {
-        return $this->belongsTo(Sponser::class);
+        return $this->belongsTo(Site::class);
     }
 
     public function salesgraphs()

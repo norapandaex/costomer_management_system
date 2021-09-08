@@ -63,6 +63,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('costomers/payment/{id}', 'CostomersController@payment_index')->name('costomers.payment');
     Route::post('costomers/payment_store/{id}', 'CostomersController@payment_store')->name('costomers.payment_store');
     Route::delete('costomers/payment_destroy/{id}/{sponser}', 'CostomersController@payment_destroy')->name('costomers.payment_destroy');
+    Route::get('costomers/payment_edit/{id}', 'CostomersController@payment_edit')->name('costomers.payment_edit');
+    Route::put('costomers/payment_update/{id}', 'CostomersController@payment_update')->name('costomers.payment_update');
 
     //議事録
     Route::get('proceedings/index/{id}', 'ProceedingController@index')->name('proceedings.index');
@@ -80,4 +82,23 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('sales/edit/{id}', 'SalesController@edit')->name('sales.edit');
     Route::put('sales/update/{id}', 'SalesController@update')->name('sales.update');
     Route::post('sales/store/{id}', 'SalesController@store')->name('sales.store');
+    Route::get('sales/production', 'SalesController@production')->name('sales.production');
+    Route::get('sales/operating', 'SalesController@operating')->name('sales.operating');
+    Route::get('sales/sponser', 'SalesController@sponser')->name('sales.sponser');
+    Route::get('sales/addition', 'SalesController@addition')->name('sales.addition');
+    Route::get('sales/production_year', 'SalesController@production_year')->name('sales.production_year');
+    Route::get('sales/operating_year', 'SalesController@operating_year')->name('sales.operating_year');
+    Route::get('sales/sponser_year', 'SalesController@sponser_year')->name('sales.sponser_year');
+    Route::get('sales/addition_year', 'SalesController@addition_year')->name('sales.addition_year');
+    Route::post('sales/production_month', 'SalesController@production_month')->name('sales.production_month');
+    Route::post('sales/operating_month', 'SalesController@operating_month')->name('sales.operating_month');
+    Route::post('sales/sponser_month', 'SalesController@sponser_month')->name('sales.sponser_month');
+    Route::post('sales/addition_month', 'SalesController@addition_month')->name('sales.addition_month');
+    Route::get('sales/addition_index/{id}', 'SalesController@addition_index')->name('sales.addition_index');
+
+    //追加作業費
+    Route::post('sales/addition_create/{id}', 'SalesController@addition_create')->name('sales.addition_create');
+    Route::get('sales/addition_edit/{id}', 'SalesController@addition_edit')->name('sales.addition_edit');
+    Route::put('sales/addition_update/{id}', 'SalesController@addition_update')->name('sales.addition_update');
+    Route::delete('sales/addition_destroy/{id}', 'SalesController@addition_destroy')->name('sales.addition_destroy');
 });

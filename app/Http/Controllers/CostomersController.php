@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class CostomersController extends Controller
 {
@@ -285,11 +286,60 @@ class CostomersController extends Controller
             'amount' => $request->amount,
         ]);
 
+        $payments = \App\Payment::get();
+
+        $pid = 0;
+
+        foreach ($payments as $payment) {
+            if ($pid < $payment->id) {
+                $pid = $payment->id;
+            }
+        }
+
+        $salesgraph = new \App\Salesgraph;
+
+        $salesgraph->create_sponser($request, $pid);
+
         return redirect()->route('costomers.payment', ['id' => $id]);
+    }
+
+    public function payment_edit($id)
+    {
+        $payment = \App\Payment::findOrFail($id);
+
+        return view('costomers.payment_edit', ['payment' => $payment]);
+    }
+
+    public function payment_update(Request $request, $id)
+    {
+        $payment = \App\Payment::findOrFail($id);
+
+        $payment->day = $request->day;
+        $payment->amount = $request->amount;
+
+        $payment->save();
+
+        $m = new Carbon($request->day);
+
+        $month = $m->format('Y-m');
+
+        $salesgraph = \App\salesgraph::where('payment_id', "$id")->firstOrFail();
+
+        $salesgraph->month = $month;
+        $salesgraph->sponserc = $request->amount;
+        $salesgraph->sum_cost = $request->amount;
+
+        $salesgraph->save();
+
+        return redirect()->route('costomers.payment', ['id' => $payment->sponser_id]);
     }
 
     public function payment_destroy($id, $sponser)
     {
+        $salesgraph = \App\salesgraph::where('payment_id', "$id")->firstOrFail();
+
+        $salesgraph->delete();
+
         $payment = \App\Payment::findOrFail($id);
 
         $payment->delete();

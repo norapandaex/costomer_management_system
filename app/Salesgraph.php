@@ -11,11 +11,22 @@ class Salesgraph extends Model
     protected $guarded = [
         'id',
         'site_id',
+        'payment_id',
     ];
 
     public function site()
     {
         return $this->belongsTo(Site::class);
+    }
+
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class);
+    }
+
+    public function addition()
+    {
+        return $this->belongsTo(Addition::class);
     }
 
     public function create_date($request, $id)
@@ -64,89 +75,45 @@ class Salesgraph extends Model
         $add = new \App\Console\Commands\AddOperatingCost;
 
         $add->handle();
-
-        // dd($salesgraphs);
-
-        // $count = 0;
-
-        // foreach ($salesgraphs as $salesgraph) {
-
-        //     if ($salesgraph->production_cost != 0 && $salesgraph->operating_cost != 0) {
-
-        //         if ($request->operating_month != $request->production_month) {
-
-        //             $salesgraph->delete();
-
-        //             $site = \App\Site::find($id);
-
-        //             $site->salesgraphs()->create([
-        //                 'production_cost' => $request->production_cost,
-        //                 'operating_cost' => 0,
-        //                 'month' => $request->production_month,
-        //                 'sum_cost' => $request->production_cost,
-        //             ]);
-
-        //             $site->salesgraphs()->create([
-        //                 'production_cost' => 0,
-        //                 'operating_cost' => $request->operating_cost,
-        //                 'month' => $request->operating_month,
-        //                 'sum_cost' => $request->operating_cost,
-        //             ]);
-        //         } else {
-
-        //             $salesgraph->production_cost = $request->production_cost;
-        //             $salesgraph->operating_cost = $request->operating_cost;
-        //             $salesgraph->month = $request->production_month;
-        //             $salesgraph->sum_cost = $request->production_cost + $request->operating_cost;
-
-        //             $salesgraph->save();
-        //         }
-        //     } else {
-        //         if ($request->operating_month == $request->production_month) {
-
-        //             if ($count == 0) {
-        //                 $salesgraph->delete();
-
-        //                 $site = \App\Site::find($id);
-
-        //                 $site->salesgraphs()->create([
-        //                     'production_cost' => $request->production_cost,
-        //                     'operating_cost' => $request->operating_cost,
-        //                     'month' => $request->production_month,
-        //                     'sum_cost' => $request->production_cost + $request->operating_cost,
-        //                 ]);
-
-        //                 $count++;
-        //             } else {
-        //                 $salesgraph->delete();
-        //             }
-        //         } else {
-        //             if ($salesgraph->production_cost == 0) {
-
-        //                 $salesgraph->operating_cost = $request->operating_cost;
-        //                 $salesgraph->month = $request->operating_month;
-        //                 $salesgraph->sum_cost = $request->operating_cost;
-
-        //                 $salesgraph->save();
-        //             } else if ($salesgraph->operating_cost == 0) {
-
-        //                 $salesgraph->production_cost = $request->production_cost;
-        //                 $salesgraph->month = $request->production_month;
-        //                 $salesgraph->sum_cost = $request->production_cost;
-
-        //                 $salesgraph->save();
-        //             }
-        //         }
-        //     }
-        // }
     }
 
-    public function create_year()
+    public function create_sponser($request, $pid)
     {
-        $salesgraphs = \App\Salesgraph::orderBy('month', 'asc')->get();
+        $payment = \App\Payment::find($pid);
+
+        $m = new Carbon($request->day);
+
+        $month = $m->format('Y-m');
+
+        $payment->salesgraphs()->create([
+            'sponserc' => $request->amount,
+            'month' => $month,
+            'sum_cost' => $request->amount,
+        ]);
+    }
+
+    public function create_addition($request, $id)
+    {
+        $addition = \App\Addition::find($id);
+
+        $m = new Carbon($request->day);
+
+        $month = $m->format('Y-m');
+
+        $addition->salesgraphs()->create([
+            'additionc' => $request->cost,
+            'month' => $month,
+            'sum_cost' => $request->cost,
+        ]);
+    }
+
+    public function create_year($salesgraphs)
+    {
+        //$salesgraphs = \App\Salesgraph::orderBy('month', 'asc')->get();
         $year1 = 0;
         $sale = 0;
         $data = count($salesgraphs);
+        $max = 0;
 
         while ($data != 0) {
             $count = 0;
@@ -174,11 +141,15 @@ class Salesgraph extends Model
                     $salesyears[] = $sale;
                     $salesgraphs = $salesgraphs2;
                     $data = count($salesgraphs);
+
+                    if ($max < $sale) {
+                        $max = $sale;
+                    }
                 }
             }
         }
         //dd($data, $salesgraphs, $sales, $years);
 
-        return [$salesyears, $years];
+        return [$salesyears, $years, $max];
     }
 }

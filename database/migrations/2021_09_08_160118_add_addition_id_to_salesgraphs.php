@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnToSalesgraphs extends Migration
+class AddAdditionIdToSalesgraphs extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,9 @@ class AddColumnToSalesgraphs extends Migration
     public function up()
     {
         Schema::table('salesgraphs', function (Blueprint $table) {
-            //
+            $table->unsignedBigInteger('addition_id')->nullable()->after('sponserc');
+
+            $table->foreign('addition_id')->references('id')->on('additions');
         });
     }
 
@@ -26,7 +28,8 @@ class AddColumnToSalesgraphs extends Migration
     public function down()
     {
         Schema::table('salesgraphs', function (Blueprint $table) {
-            //
+            $table->dropForeign('salesgraphs_addition_id_foreign');
+            $table->dropColumn('addition_id');
         });
     }
 }
