@@ -10,7 +10,6 @@
   @include('commons.error_messages')
   <?php 
     $i = 0;
-    $counts = count($sales);
   ?>
 
   <div class="col-10 offset-1">
@@ -140,136 +139,106 @@
       </thead>
       <tbody class="text-center">
         @foreach($sales as $sale)
-        <tr>
-          <td>{{ $sale->month }}</td>
-          <td>
-            @if($sale->site_id != null)
-              {{ $sale->site->costomer->name }}
-            @elseif($sale->payment_id != null)
-              {{ $sale->payment->sponser->costomer->name }}
-            @elseif($sale->addition_id != null)
-              {{$sale->addition->site->name}}
-            @endif
-          </td>
-          <td>
-            @if($sale->site_id != null)
-              {{ $sale->site->name }}
-            @elseif($sale->addition_id != null)
-              {{$sale->addition->site->costomer->name}}
-            @else
-              -
-            @endif
-          </td>
-          <td>
-            @if($sale->production_cost != null)
-              {{ $sale->production_cost }}
-            @else
-              -
-            @endif
-          </td>
-          <td>
-            @if($sale->operating_cost != null)
-              {{ $sale->operating_cost }}
-            @else
-              -
-            @endif
-          </td>
-          <td>
-            @if($sale->sponserc != null)
-              {{ $sale->sponserc }}
-            @else
-              -
-            @endif
-          </td>
-          <td>
-            @if($sale->additionc != null)
-              {{ $sale->additionc }}
-            @else
-              -
-            @endif
-          </td>
-          <td>
-            @if($sale->systemc != null)
-              {{ $sale->systemc }}
-            @else
-              -
-            @endif
-          </td>
-          <td>{{ $sale->sum_cost }}</td>
-          <td>
-            @if($sale->site_id != null)
-              {!! link_to_route('sales.edit', '編集', ['id' => $sale->site_id], ['class' => 'btn btn-primary']) !!}
-            @elseif($sale->payment_id != null)
-              {!! link_to_route('costomers.payment', '編集', ['id' => $sale->payment->sponser_id], ['class' => 'btn btn-primary']) !!}
-            @elseif($sale->addition_id != null)
-              {!! link_to_route('sales.addition_index', '編集', ['id' => $sale->addition->site_id], ['class' => 'btn btn-primary']) !!}
-            @endif
-          </td>
-        </tr>
-        <?php
-          if ($sales != null) {
-            if(count($sales) == 1){
-              $sales_data[] = $sale->sum_cost;
-              $month_data[] = $sale->month;
-              $varJsSales = json_encode($sales_data);
-              $varJsMonth = json_encode($month_data);
-              $max = $sale->sum_cost;
-            } else {
-              if($i == 0)
-              {
-                $month1 = $sale->month;
-                $month2 = null;
-                $sales_data = array();
-                $month_data = array();
-                $cost2 = 0;
-                $cost = $sale->sum_cost;
-                $max = $sale->sum_cost;
-                $i++;
-              } else {
-                $month2 = $sale->month;
-                $m[] = $sale->month;
-                $cost2 = $sale->sum_cost;
-                $i++;
-              }
-
-              if($i > 1){
-                if($month1 == $month2){
-                  $cost = $cost + $cost2;
-                } else {
-                  $sales_data[] = $cost;
-                  $month_data[] = $month1;
-                  $cost = $cost2;
-                  $month1 = $month2;
-                }
-
-                if($i == $counts){
-                  $sales_data[] = $cost;
-                  $month_data[] = $month1;
-                }
-
-                if($max < $cost){
-                  $max = $cost;
-                }
-                
-                if(count($sales_data) >= 1){
-                  $varJsSales = json_encode($sales_data);
-                  $varJsMonth = json_encode($month_data);
-                }
-              }
-              //var_dump($cost, $month1, $i, $counts, $sales_data, $month_data);
-            }
-            
-          }
-          ?>
+          <tr>
+            <td>{{ $sale->month }}</td>
+            <td>
+              @if($sale->site_id != null)
+                {{ $sale->site->costomer->name }}
+              @elseif($sale->payment_id != null)
+                {{ $sale->payment->sponser->costomer->name }}
+              @elseif($sale->addition_id != null)
+                {{$sale->addition->site->name}}
+              @endif
+            </td>
+            <td>
+              @if($sale->site_id != null)
+                {{ $sale->site->name }}
+              @elseif($sale->addition_id != null)
+                {{$sale->addition->site->costomer->name}}
+              @else
+                -
+              @endif
+            </td>
+            <td>
+              @if($sale->production_cost != null)
+                {{ $sale->production_cost }}
+              @else
+                -
+              @endif
+            </td>
+            <td>
+              @if($sale->operating_cost != null)
+                {{ $sale->operating_cost }}
+              @else
+                -
+              @endif
+            </td>
+            <td>
+              @if($sale->sponserc != null)
+                {{ $sale->sponserc }}
+              @else
+                -
+              @endif
+            </td>
+            <td>
+              @if($sale->additionc != null)
+                {{ $sale->additionc }}
+              @else
+                -
+              @endif
+            </td>
+            <td>
+              @if($sale->systemc != null)
+                {{ $sale->systemc }}
+              @else
+                -
+              @endif
+            </td>
+            <td>{{ $sale->sum_cost }}</td>
+            <td>
+              @if($sale->site_id != null)
+                {!! link_to_route('sales.edit', '編集', ['id' => $sale->site_id], ['class' => 'btn btn-primary']) !!}
+              @elseif($sale->payment_id != null)
+                {!! link_to_route('costomers.payment', '編集', ['id' => $sale->payment->sponser_id], ['class' => 'btn btn-primary']) !!}
+              @elseif($sale->addition_id != null)
+                {!! link_to_route('sales.addition_index', '編集', ['id' => $sale->addition->site_id], ['class' => 'btn btn-primary']) !!}
+              @endif
+            </td>
+          </tr>
         @endforeach
       </tbody>
     </table>
   </div><br>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <div id="chart_div"></div>
+  
+  @if(Request::routeIs('sales.index') || Request::routeIs('sales.month'))
+  <?php
+    $salesgraph = new \App\salesgraph;
+
+    list($varJsSales, $varJsMonth, $max1, $i) = $salesgraph->create($sales);
+    list($varJsProductions, $varJsProductionsMonth, $max2, $i) = $salesgraph->create($productions);
+    list($varJsOperatings, $varJsOperatingsMonth, $max3, $i) = $salesgraph->create($operatings);
+    list($varJsSponsers, $varJsSponsersMonth, $max4, $i) = $salesgraph->create($sponsers);
+    list($varJsAdditions, $varJsAdditionsMonth, $max5, $i) = $salesgraph->create($additions);
+    //dd($sales);
+    $max = $max1;
+
+  ?>
+  @else
+  <?php
+    $salesgraph = new \App\salesgraph;
+
+    list($varJsSales, $varJsMonth, $max, $i) = $salesgraph->create($sales);
+  ?>
+  @endif
 
   @if($sales != null && $i > 1 || count($sales) == 1)
     <script type="text/javascript">
         var sales = JSON.parse('<?php echo $varJsSales; ?>');
         var months = JSON.parse('<?php echo $varJsMonth; ?>');
+        var additions = JSON.parse('<?php echo $varJsAdditions; ?>');
+        var additions_months = JSON.parse('<?php echo $varJsAdditionsMonth; ?>');
         var max = JSON.parse('<?php echo $max; ?>');
     </script>
   @endif

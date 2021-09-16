@@ -18,6 +18,11 @@ class SalesController extends Controller
         $this_year = $dt->year;
 
         $sales = \App\Salesgraph::where('month', 'like', "%$this_year%")->orderBy('month', 'asc')->get();
+        $productions = \App\Salesgraph::where('month', 'like', "%$this_year%")->where('production_cost', '<>', '0')->orderBy('month', 'asc')->get();
+        $operatings = \App\Salesgraph::where('month', 'like', "%$this_year%")->where('operating_cost', '<>', '0')->orderBy('month', 'asc')->get();
+        $sponsers = \App\Salesgraph::where('month', 'like', "%$this_year%")->where('sponserc', '<>', null)->orderBy('month', 'asc')->get();
+        $additions = \App\Salesgraph::where('month', 'like', "%$this_year%")->where('additionc', '<>', null)->orderBy('month', 'asc')->get();
+
         $sites = \App\Site::all();
 
         $salesgraph = new \App\Salesgraph;
@@ -28,6 +33,10 @@ class SalesController extends Controller
 
         return view('sales.index', [
             'sales' => $sales,
+            'productions' => $productions,
+            'operatings' => $operatings,
+            'sponsers' => $sponsers,
+            'additions' => $additions,
             'years' => $years,
             'this_year' => $this_year,
             'sites' => $sites,

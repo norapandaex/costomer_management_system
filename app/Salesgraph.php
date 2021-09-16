@@ -29,6 +29,68 @@ class Salesgraph extends Model
         return $this->belongsTo(Addition::class);
     }
 
+    public function create($sales)
+    {
+        $counts = count($sales);
+        $i = 0;
+        if ($sales != null) {
+            foreach ($sales as $sale) {
+                if (count($sales) == 1) {
+                    $sales_data[] = $sale->sum_cost;
+                    $month_data[] = $sale->month;
+                    $varJsSales = json_encode($sales_data);
+                    $varJsMonth = json_encode($month_data);
+                    $max = $sale->sum_cost;
+
+                    return [$varJsMonth, $varJsSales, $max];
+                } else {
+                    if ($i == 0) {
+                        $month1 = $sale->month;
+                        $month2 = null;
+                        $sales_data = array();
+                        $month_data = array();
+                        $cost2 = 0;
+                        $cost = $sale->sum_cost;
+                        $max = $sale->sum_cost;
+                        $i++;
+                    } else {
+                        $month2 = $sale->month;
+                        $m[] = $sale->month;
+                        $cost2 = $sale->sum_cost;
+                        $i++;
+                    }
+
+                    if ($i > 1) {
+                        if ($month1 == $month2) {
+                            $cost = $cost + $cost2;
+                        } else {
+                            $sales_data[] = $cost;
+                            $month_data[] = $month1;
+                            $cost = $cost2;
+                            $month1 = $month2;
+                        }
+
+                        if ($i == $counts) {
+                            $sales_data[] = $cost;
+                            $month_data[] = $month1;
+                        }
+
+                        if ($max < $cost) {
+                            $max = $cost;
+                        }
+
+                        if (count($sales_data) >= 1) {
+                            $varJsSales = json_encode($sales_data);
+                            $varJsMonth = json_encode($month_data);
+                        }
+                    }
+                    //var_dump($cost, $month1, $i, $counts, $sales_data, $month_data);
+                }
+            }
+            return [$varJsSales, $varJsMonth, $max, $i];
+        }
+    }
+
     public function create_date($request, $id)
     {
         $site = \App\Site::find($id);
