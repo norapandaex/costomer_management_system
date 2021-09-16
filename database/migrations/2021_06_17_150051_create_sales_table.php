@@ -17,7 +17,8 @@ class CreateSalesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('site_id');
             $table->string('production_cost')->nullable();
-            $table->string('month');
+            $table->string('production_month');
+            $table->string('operating_month');
             $table->string('operating_cost')->nullable();
             $table->string('sum_cost')->nullable();
             $table->timestamps();
