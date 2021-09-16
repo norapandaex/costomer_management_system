@@ -55,7 +55,7 @@ class CostomersController extends Controller
         $costomers->other = $request->other;
         $costomers->email = $request->email;
         $costomers->tel = $request->tel;
-        $costomers->contract = $request->contract;
+        //$costomers->contract = $request->contract;
         $costomers->save();
 
 
