@@ -40,7 +40,7 @@
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
               @if(Request::routeIs('sales.index')|| Request::routeIs('sales.month'))
-                <a href="{{ route('sales.index', []) }}" class="nav-link {{ Request::routeIs('sales.index') ? 'active' : '' }}">月別売り上げ</a>
+                <a href="{{ route('sales.index', []) }}" class="nav-link {{ Request::routeIs('sales.index') ? 'active' : '' }}{{ Request::routeIs('sales.month') ? 'active' : '' }}">月別売り上げ</a>
               @elseif(Request::routeIs('sales.production') || Request::routeIs('sales.production_month'))
                 <a href="{{ route('sales.production', []) }}" class="nav-link {{ Request::routeIs('sales.production') ? 'active' : '' }}">月別売り上げ</a>
               @elseif(Request::routeIs('sales.operating') || Request::routeIs('sales.operating_month'))
@@ -212,33 +212,17 @@
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <div id="chart_div"></div>
   
-  @if(Request::routeIs('sales.index') || Request::routeIs('sales.month'))
-  <?php
-    $salesgraph = new \App\salesgraph;
-
-    list($varJsSales, $varJsMonth, $max1, $i) = $salesgraph->create($sales);
-    list($varJsProductions, $varJsProductionsMonth, $max2, $i) = $salesgraph->create($productions);
-    list($varJsOperatings, $varJsOperatingsMonth, $max3, $i) = $salesgraph->create($operatings);
-    list($varJsSponsers, $varJsSponsersMonth, $max4, $i) = $salesgraph->create($sponsers);
-    list($varJsAdditions, $varJsAdditionsMonth, $max5, $i) = $salesgraph->create($additions);
-    //dd($sales);
-    $max = $max1;
-
-  ?>
-  @else
   <?php
     $salesgraph = new \App\salesgraph;
 
     list($varJsSales, $varJsMonth, $max, $i) = $salesgraph->create($sales);
+    //dd($varJsSales, $varJsMonth, $max,);
   ?>
-  @endif
 
   @if($sales != null && $i > 1 || count($sales) == 1)
     <script type="text/javascript">
         var sales = JSON.parse('<?php echo $varJsSales; ?>');
         var months = JSON.parse('<?php echo $varJsMonth; ?>');
-        var additions = JSON.parse('<?php echo $varJsAdditions; ?>');
-        var additions_months = JSON.parse('<?php echo $varJsAdditionsMonth; ?>');
         var max = JSON.parse('<?php echo $max; ?>');
     </script>
   @endif

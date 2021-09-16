@@ -19,7 +19,11 @@ class CreateCostomersTable extends Migration
             $table->integer('relation')->nullable();
             $table->integer('category')->nullable();
             $table->string('staff')->nullable();
+            $table->string('mystaff')->nullable();
             $table->string('address')->nullable();
+            $table->string('prefecture')->nullable();
+            $table->string('city')->nullable();
+            $table->string('other')->nullable();
             $table->string('email')->nullable();
             $table->string('tel')->nullable();
             $table->timestamps();

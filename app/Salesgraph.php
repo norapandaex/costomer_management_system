@@ -41,8 +41,7 @@ class Salesgraph extends Model
                     $varJsSales = json_encode($sales_data);
                     $varJsMonth = json_encode($month_data);
                     $max = $sale->sum_cost;
-
-                    return [$varJsMonth, $varJsSales, $max];
+                    return [$varJsSales, $varJsMonth, $max, $i];
                 } else {
                     if ($i == 0) {
                         $month1 = $sale->month;
