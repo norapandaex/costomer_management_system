@@ -101,11 +101,6 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    {!! Form::label('contract', '契約内容') !!}
-                    {!! Form::textarea('contract', null, ['class' => 'form-control','rows' => '10', 'FlexTextarea__textarea', 'id' => 'FlexTextarea']) !!}
-                </div>
-
                 {!! Form::submit('登録', ['class' => 'btn btn-primary btn-block']) !!}
             {!! Form::close() !!}
         </div>
