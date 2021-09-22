@@ -30,7 +30,7 @@ class SchedulesController extends Controller
         return view('welcome', $data);
     }
 
-    public function home_month()
+    public function homeMonth()
     {
         $data = [];
         if (\Auth::check()) {
@@ -50,7 +50,7 @@ class SchedulesController extends Controller
         return view('welcome', $data);
     }
 
-    public function home_next()
+    public function homeNext()
     {
         $data = [];
         if (\Auth::check()) {

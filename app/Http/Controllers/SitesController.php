@@ -150,7 +150,7 @@ class SitesController extends Controller
         return redirect()->route('sites.index');
     }
 
-    public function pv_index($id)
+    public function pvIndex($id)
     {
 
         $site = \App\Site::find($id);
@@ -165,7 +165,7 @@ class SitesController extends Controller
         return view('sites.pv', $data);
     }
 
-    public function pv_store(Request $request, $id)
+    public function pvStore(Request $request, $id)
     {
 
         $request->validate([
@@ -183,7 +183,7 @@ class SitesController extends Controller
         return redirect()->route('sites.pv', ['id' => $id]);
     }
 
-    public function pv_edit($id, $site)
+    public function pvEdit($id, $site)
     {
         $pv = \App\Pv::find($id);
         $site = \App\Site::find($site);
@@ -194,7 +194,7 @@ class SitesController extends Controller
         ]);
     }
 
-    public function pv_update(Request $request, $id, $site)
+    public function pvUpdate(Request $request, $id, $site)
     {
 
         $pv = \App\Pv::find($id);
@@ -207,7 +207,7 @@ class SitesController extends Controller
         return redirect()->route('sites.pv', ['id' => $site]);
     }
 
-    public function pv_destroy($id, $site)
+    public function pvDestroy($id, $site)
     {
 
         $pv = \App\Pv::find($id);

@@ -13,22 +13,35 @@
 
             {!! Form::open(['route' => 'signup.post']) !!}
                 <div class="form-group">
-                    {!! Form::label('name', 'Name') !!}
+                    {!! Form::label('name', '名前') !!}
                     {!! Form::text('name', null, ['class' => 'form-control']) !!}
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('email', 'Email') !!}
+                    {!! Form::label('division', '所属') !!}
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="inputGroupSelect01" name="division">
+                          <option value="0">選択</option>
+                          <option value="1">HP制作事業部</option>
+                          <option value="2">P管理事業部1</option>
+                          <option value="3">P管理事業部2</option>
+                          <option value="4">メディア事業部</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {!! Form::label('email', 'メールアドレス') !!}
                     {!! Form::email('email', null, ['class' => 'form-control']) !!}
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('password', 'Password') !!}
+                    {!! Form::label('password', 'パスワード') !!}
                     {!! Form::password('password', ['class' => 'form-control']) !!}
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('password_confirmation', 'Confirmation') !!}
+                    {!! Form::label('password_confirmation', 'パスワード（確認）') !!}
                     {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
                 </div>
 

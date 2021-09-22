@@ -22,6 +22,7 @@ class SalesController extends Controller
         $operatings = \App\Salesgraph::where('month', 'like', "%$this_year%")->where('operating_cost', '<>', '0')->orderBy('month', 'asc')->get();
         $sponsers = \App\Salesgraph::where('month', 'like', "%$this_year%")->where('sponserc', '<>', null)->orderBy('month', 'asc')->get();
         $additions = \App\Salesgraph::where('month', 'like', "%$this_year%")->where('additionc', '<>', null)->orderBy('month', 'asc')->get();
+        $costs = \App\Salesgraph::where('month', 'like', "%$this_year%")->where('costc', '<>', null)->orderBy('month', 'asc')->get();
 
         $sites = \App\Site::all();
 
@@ -29,7 +30,7 @@ class SalesController extends Controller
 
         $salesgraphs = \App\Salesgraph::orderBy('month', 'asc')->get();
 
-        list($salesyears, $years) = $salesgraph->create_year($salesgraphs);
+        list($salesyears, $years) = $salesgraph->createYear($salesgraphs);
 
         return view('sales.index', [
             'sales' => $sales,
@@ -40,6 +41,7 @@ class SalesController extends Controller
             'years' => $years,
             'this_year' => $this_year,
             'sites' => $sites,
+            'costs' => $costs,
             'cos' => 0,
             //'counts' => $counts,
         ]);
@@ -51,7 +53,7 @@ class SalesController extends Controller
 
         $salesgraph = new \App\Salesgraph;
 
-        list($salesyears, $years, $max) = $salesgraph->create_year($sales);
+        list($salesyears, $years, $max) = $salesgraph->createYear($sales);
 
         return view('sales.year', [
             'sales' => $sales,
@@ -71,11 +73,13 @@ class SalesController extends Controller
             $sites = \App\Site::all();
         }
 
+        $costs = \App\Salesgraph::where('month', 'like', "%$request->year%")->where('costc', '<>', null)->orderBy('month', 'asc')->get();
+
         $salesgraph = new \App\Salesgraph;
 
         $salesgraphs = \App\Salesgraph::orderBy('month', 'asc')->get();
 
-        list($salesyears, $years) = $salesgraph->create_year($salesgraphs);
+        list($salesyears, $years) = $salesgraph->createYear($salesgraphs);
 
         $this_year = $request->year;
         $cos = $request->site;
@@ -85,6 +89,7 @@ class SalesController extends Controller
             'years' => $years,
             'this_year' => $this_year,
             'sites' => $sites,
+            'costs' => $costs,
             'cos' => $cos,
             //'counts' => $counts,
         ]);
@@ -102,26 +107,27 @@ class SalesController extends Controller
 
         $salesgraphs = \App\Salesgraph::orderBy('month', 'asc')->get();
 
-        list($salesyears, $years) = $salesgraph->create_year($salesgraphs);
+        list($salesyears, $years) = $salesgraph->createYear($salesgraphs);
 
         return view('sales.index', [
             'sales' => $sales,
             'years' => $years,
             'this_year' => $this_year,
             'sites' => $sites,
+            'costs' => [],
             'cos' => 0,
             //'counts' => $counts,
         ]);
     }
 
-    public function production_year()
+    public function productionYear()
     {
         $sales = \App\Salesgraph::where('production_cost', '<>', '0')->orderBy('month', 'asc')->get();
         $sites = \App\Site::all();
 
         $salesgraph = new \App\Salesgraph;
 
-        list($salesyears, $years, $max) = $salesgraph->create_year($sales);
+        list($salesyears, $years, $max) = $salesgraph->createYear($sales);
 
         //dd($salesyears, $years);
 
@@ -133,7 +139,7 @@ class SalesController extends Controller
         ]);
     }
 
-    public function production_month(Request $request)
+    public function productionMonth(Request $request)
     {
         if ($request->site == 0) {
             $sales = \App\Salesgraph::where('month', 'like', "%$request->year%")->where('production_cost', '<>', '0')->orderBy('month', 'asc')->get();
@@ -147,7 +153,7 @@ class SalesController extends Controller
 
         $salesgraphs = \App\Salesgraph::orderBy('month', 'asc')->get();
 
-        list($salesyears, $years) = $salesgraph->create_year($salesgraphs);
+        list($salesyears, $years) = $salesgraph->createYear($salesgraphs);
 
         $this_year = $request->year;
         $cos = $request->site;
@@ -157,6 +163,7 @@ class SalesController extends Controller
             'years' => $years,
             'this_year' => $this_year,
             'sites' => $sites,
+            'costs' => [],
             'cos' => $cos,
             //'counts' => $counts,
         ]);
@@ -174,26 +181,27 @@ class SalesController extends Controller
 
         $salesgraphs = \App\Salesgraph::orderBy('month', 'asc')->get();
 
-        list($salesyears, $years) = $salesgraph->create_year($salesgraphs);
+        list($salesyears, $years) = $salesgraph->createYear($salesgraphs);
 
         return view('sales.index', [
             'sales' => $sales,
             'years' => $years,
             'this_year' => $this_year,
             'sites' => $sites,
+            'costs' => [],
             'cos' => 0,
             //'counts' => $counts,
         ]);
     }
 
-    public function operating_year()
+    public function operatingYear()
     {
         $sales = \App\Salesgraph::where('operating_cost', '<>', '0')->orderBy('month', 'asc')->get();
         $sites = \App\Site::all();
 
         $salesgraph = new \App\Salesgraph;
 
-        list($salesyears, $years, $max) = $salesgraph->create_year($sales);
+        list($salesyears, $years, $max) = $salesgraph->createYear($sales);
 
         //dd($salesyears, $years);
 
@@ -205,7 +213,7 @@ class SalesController extends Controller
         ]);
     }
 
-    public function operating_month(Request $request)
+    public function operatingMonth(Request $request)
     {
         if ($request->site == 0) {
             $sales = \App\Salesgraph::where('month', 'like', "%$request->year%")->where('operating_cost', '<>', '0')->orderBy('month', 'asc')->get();
@@ -219,7 +227,7 @@ class SalesController extends Controller
 
         $salesgraphs = \App\Salesgraph::orderBy('month', 'asc')->get();
 
-        list($salesyears, $years) = $salesgraph->create_year($salesgraphs);
+        list($salesyears, $years) = $salesgraph->createYear($salesgraphs);
 
         $this_year = $request->year;
         $cos = $request->site;
@@ -229,6 +237,7 @@ class SalesController extends Controller
             'years' => $years,
             'this_year' => $this_year,
             'sites' => $sites,
+            'costs' => [],
             'cos' => $cos,
             //'counts' => $counts,
         ]);
@@ -246,26 +255,27 @@ class SalesController extends Controller
 
         $salesgraphs = \App\Salesgraph::orderBy('month', 'asc')->get();
 
-        list($salesyears, $years) = $salesgraph->create_year($salesgraphs);
+        list($salesyears, $years) = $salesgraph->createYear($salesgraphs);
 
         return view('sales.index', [
             'sales' => $sales,
             'years' => $years,
             'this_year' => $this_year,
             'costomers' => $costomers,
+            'costs' => [],
             'cos' => 0,
             //'counts' => $counts,
         ]);
     }
 
-    public function sponser_year()
+    public function sponserYear()
     {
 
         $sales = \App\Salesgraph::where('sponserc', '<>', null)->orderBy('month', 'asc')->get();
 
         $salesgraph = new \App\Salesgraph;
 
-        list($salesyears, $years, $max) = $salesgraph->create_year($sales);
+        list($salesyears, $years, $max) = $salesgraph->createYear($sales);
 
         //dd($salesyears, $years);
 
@@ -277,7 +287,7 @@ class SalesController extends Controller
         ]);
     }
 
-    public function sponser_month(Request $request)
+    public function sponserMonth(Request $request)
     {
         if ($request->costomer == 0) {
             $sales = \App\Salesgraph::where('month', 'like', "%$request->year%")->where('sponserc', '<>', '0')->orderBy('month', 'asc')->get();
@@ -296,7 +306,7 @@ class SalesController extends Controller
 
         $salesgraphs = \App\Salesgraph::orderBy('month', 'asc')->get();
 
-        list($salesyears, $years) = $salesgraph->create_year($salesgraphs);
+        list($salesyears, $years) = $salesgraph->createYear($salesgraphs);
 
         $this_year = $request->year;
         $cos = $request->site;
@@ -306,6 +316,7 @@ class SalesController extends Controller
             'years' => $years,
             'this_year' => $this_year,
             'costomers' => $costomers,
+            'costs' => [],
             'cos' => $cos,
         ]);
     }
@@ -322,25 +333,26 @@ class SalesController extends Controller
 
         $salesgraphs = \App\Salesgraph::orderBy('month', 'asc')->get();
 
-        list($salesyears, $years) = $salesgraph->create_year($salesgraphs);
+        list($salesyears, $years) = $salesgraph->createYear($salesgraphs);
 
         return view('sales.index', [
             'sales' => $sales,
             'years' => $years,
             'this_year' => $this_year,
             'sites' => $sites,
+            'costs' => [],
             'cos' => 0,
         ]);
     }
 
-    public function addition_year()
+    public function additionYear()
     {
 
         $sales = \App\Salesgraph::where('additionc', '<>', null)->orderBy('month', 'asc')->get();
 
         $salesgraph = new \App\Salesgraph;
 
-        list($salesyears, $years, $max) = $salesgraph->create_year($sales);
+        list($salesyears, $years, $max) = $salesgraph->createYear($sales);
 
         //dd($salesyears, $years);
 
@@ -352,7 +364,7 @@ class SalesController extends Controller
         ]);
     }
 
-    public function addition_month(Request $request)
+    public function additionMonth(Request $request)
     {
         if ($request->site == 0) {
             $sales = \App\Salesgraph::where('month', 'like', "%$request->year%")->where('additionc', '<>', '0')->orderBy('month', 'asc')->get();
@@ -371,7 +383,7 @@ class SalesController extends Controller
 
         $salesgraphs = \App\Salesgraph::orderBy('month', 'asc')->get();
 
-        list($salesyears, $years) = $salesgraph->create_year($salesgraphs);
+        list($salesyears, $years) = $salesgraph->createYear($salesgraphs);
 
         $this_year = $request->year;
         $cos = $request->site;
@@ -381,6 +393,7 @@ class SalesController extends Controller
             'years' => $years,
             'this_year' => $this_year,
             'sites' => $sites,
+            'costs' => [],
             'cos' => $cos,
             //'counts' => $counts,
         ]);
@@ -408,7 +421,7 @@ class SalesController extends Controller
 
         $salesgraph = new \App\Salesgraph;
 
-        $salesgraph->create_date($request, $id);
+        $salesgraph->createDate($request, $id);
 
         return redirect()->route('sales.edit', ['id' => $id]);
     }
@@ -477,7 +490,7 @@ class SalesController extends Controller
 
         $id = $sales->site_id;
 
-        $salesgraph->update_date($request, $id);
+        $salesgraph->updateDate($request, $id);
 
         return redirect()->route('sales.edit', ['id' => $id]);
     }
@@ -493,7 +506,7 @@ class SalesController extends Controller
         //
     }
 
-    public function addition_index($id)
+    public function additionIndex($id)
     {
         $site = \App\Site::find($id);
         $additions = $site->additions()->orderBy('additions.day')->get();
@@ -504,7 +517,7 @@ class SalesController extends Controller
         ]);
     }
 
-    public function addition_create(Request $request, $id)
+    public function additionCreate(Request $request, $id)
     {
         $site = \App\Site::find($id);
 
@@ -526,12 +539,12 @@ class SalesController extends Controller
 
         $salesgraph = new \App\Salesgraph;
 
-        $salesgraph->create_addition($request, $aid);
+        $salesgraph->createAddition($request, $aid);
 
         return redirect()->route('sales.addition_index', ['id' => $id]);
     }
 
-    public function addition_edit($id)
+    public function additionEdit($id)
     {
         $addition = \App\Addition::find($id);
         $site = \App\Site::find($addition->site_id);
@@ -542,7 +555,7 @@ class SalesController extends Controller
         ]);
     }
 
-    public function addition_update(Request $request, $id)
+    public function additionUpdate(Request $request, $id)
     {
         $addition = \App\Addition::find($id);
 
@@ -567,7 +580,7 @@ class SalesController extends Controller
         return redirect()->route('sales.addition_index', ['id' => $addition->site_id]);
     }
 
-    public function addition_destroy($id)
+    public function additionDestroy($id)
     {
         $salesgraph = \App\Salesgraph::where('addition_id', "$id")->firstOrFail();
 

@@ -159,7 +159,7 @@ class CostomersController extends Controller
     }
 
 
-    public function sponser_index($id)
+    public function sponserIndex($id)
     {
         $costomer = \App\Costomer::find($id);
 
@@ -173,7 +173,7 @@ class CostomersController extends Controller
         return view('costomers.sponser', $data);
     }
 
-    public function sponser_create($id)
+    public function sponserCreate($id)
     {
         $costomer = \App\Costomer::find($id);
 
@@ -184,7 +184,7 @@ class CostomersController extends Controller
         return view('costomers.sponser_create', $data);
     }
 
-    public function sponser_store(Request $request, $id)
+    public function sponserStore(Request $request, $id)
     {
         $request->validate([
             'name' => 'required',
@@ -203,7 +203,7 @@ class CostomersController extends Controller
         return redirect()->route('costomers.sponser', ['id' => $costomer]);
     }
 
-    public function sponser_show($id)
+    public function sponserShow($id)
     {
         $sponser = \App\Sponser::find($id);
 
@@ -225,7 +225,7 @@ class CostomersController extends Controller
         return view('costomers.sponser_show', $data);
     }
 
-    public function sponser_edit($id, $costomer)
+    public function sponserEdit($id, $costomer)
     {
         $sponser = \App\Sponser::find($id);
 
@@ -252,7 +252,7 @@ class CostomersController extends Controller
         return redirect()->route('costomers.sponser_show', ['id' => $id]);
     }
 
-    public function sponser_destroy($id)
+    public function sponserDestroy($id)
     {
         $sponser = \App\Sponser::findOrFail($id);
 
@@ -263,7 +263,7 @@ class CostomersController extends Controller
         return redirect()->route('costomers.sponser', ['id' => $id]);
     }
 
-    public function payment_index($id)
+    public function paymentIndex($id)
     {
         $sponser = \App\Sponser::findOrFail($id);
 
@@ -272,7 +272,7 @@ class CostomersController extends Controller
         return view('costomers.payment', ['sponser' => $sponser, 'payments' => $payments]);
     }
 
-    public function payment_store(Request $request, $id)
+    public function paymentStore(Request $request, $id)
     {
         $request->validate([
             'day' => 'required',
@@ -303,14 +303,14 @@ class CostomersController extends Controller
         return redirect()->route('costomers.payment', ['id' => $id]);
     }
 
-    public function payment_edit($id)
+    public function paymentEdit($id)
     {
         $payment = \App\Payment::findOrFail($id);
 
         return view('costomers.payment_edit', ['payment' => $payment]);
     }
 
-    public function payment_update(Request $request, $id)
+    public function paymentUpdate(Request $request, $id)
     {
         $payment = \App\Payment::findOrFail($id);
 
@@ -334,7 +334,7 @@ class CostomersController extends Controller
         return redirect()->route('costomers.payment', ['id' => $payment->sponser_id]);
     }
 
-    public function payment_destroy($id, $sponser)
+    public function paymentDestroy($id, $sponser)
     {
         $salesgraph = \App\salesgraph::where('payment_id', "$id")->firstOrFail();
 

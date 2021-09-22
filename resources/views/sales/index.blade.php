@@ -10,6 +10,7 @@
   @include('commons.error_messages')
   <?php 
     $i = 0;
+    //$costs = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   ?>
 
   <div class="col-10 offset-1">
@@ -122,7 +123,7 @@
     </div>
   </div>
   <div class="col-12">
-    <table class="table table-bordered table-hover table-sm" id="sales">
+    <table class="table table-bordered table-hover table-sm" style="font-size: 14px;" id="sales">
       <thead>
         <tr>
           <th>売り上げ月</th>
@@ -133,78 +134,94 @@
           <th>スポンサー</th>
           <th>追加作業費</th>
           <th>システム</th>
+          <th>コスト</th>
           <th>売り上げ金額</th>
           <th>編集</th>
         </tr>
       </thead>
       <tbody class="text-center">
         @foreach($sales as $sale)
-          <tr>
-            <td>{{ $sale->month }}</td>
-            <td>
-              @if($sale->site_id != null)
-                {{ $sale->site->costomer->name }}
-              @elseif($sale->payment_id != null)
-                {{ $sale->payment->sponser->costomer->name }}
-              @elseif($sale->addition_id != null)
-                {{$sale->addition->site->name}}
-              @endif
-            </td>
-            <td>
-              @if($sale->site_id != null)
-                {{ $sale->site->name }}
-              @elseif($sale->addition_id != null)
-                {{$sale->addition->site->costomer->name}}
-              @else
-                -
-              @endif
-            </td>
-            <td>
-              @if($sale->production_cost != null)
-                {{ $sale->production_cost }}
-              @else
-                -
-              @endif
-            </td>
-            <td>
-              @if($sale->operating_cost != null)
-                {{ $sale->operating_cost }}
-              @else
-                -
-              @endif
-            </td>
-            <td>
-              @if($sale->sponserc != null)
-                {{ $sale->sponserc }}
-              @else
-                -
-              @endif
-            </td>
-            <td>
-              @if($sale->additionc != null)
-                {{ $sale->additionc }}
-              @else
-                -
-              @endif
-            </td>
-            <td>
-              @if($sale->systemc != null)
-                {{ $sale->systemc }}
-              @else
-                -
-              @endif
-            </td>
-            <td>{{ $sale->sum_cost }}</td>
-            <td>
-              @if($sale->site_id != null)
-                {!! link_to_route('sales.edit', '編集', ['id' => $sale->site_id], ['class' => 'btn btn-primary']) !!}
-              @elseif($sale->payment_id != null)
-                {!! link_to_route('costomers.payment', '編集', ['id' => $sale->payment->sponser_id], ['class' => 'btn btn-primary']) !!}
-              @elseif($sale->addition_id != null)
-                {!! link_to_route('sales.addition_index', '編集', ['id' => $sale->addition->site_id], ['class' => 'btn btn-primary']) !!}
-              @endif
-            </td>
-          </tr>
+            <tr>
+              <td>{{ $sale->month }}</td>
+              <td>
+                @if($sale->site_id != null)
+                  {{ $sale->site->costomer->name }}
+                @elseif($sale->payment_id != null)
+                  {{ $sale->payment->sponser->costomer->name }}
+                @elseif($sale->addition_id != null)
+                  {{$sale->addition->site->name}}
+                @endif
+              </td>
+              <td>
+                @if($sale->site_id != null)
+                  {{ $sale->site->name }}
+                @elseif($sale->addition_id != null)
+                  {{$sale->addition->site->costomer->name}}
+                @else
+                  -
+                @endif
+              </td>
+              <td>
+                @if($sale->production_cost != null)
+                  {{ $sale->production_cost }}
+                @else
+                  -
+                @endif
+              </td>
+              <td>
+                @if($sale->operating_cost != null)
+                  {{ $sale->operating_cost }}
+                @else
+                  -
+                @endif
+              </td>
+              <td>
+                @if($sale->sponserc != null)
+                  {{ $sale->sponserc }}
+                @else
+                  -
+                @endif
+              </td>
+              <td>
+                @if($sale->additionc != null)
+                  {{ $sale->additionc }}
+                @else
+                  -
+                @endif
+              </td>
+              <td>
+                @if($sale->systemc != null)
+                  {{ $sale->systemc }}
+                @else
+                  -
+                @endif
+              </td>
+              <td>
+                @if($sale->costc != null)
+                  {{ $sale->costc }}
+                @else
+                  -
+                @endif
+              </td>
+              <td>
+                @if($sale->costc != null)
+                  -
+                @else
+                  {{ $sale->sum_cost }}
+                @endif
+              </td>
+              <td>
+                @if($sale->site_id != null)
+                  {!! link_to_route('sales.edit', '編集', ['id' => $sale->site_id], ['class' => 'btn btn-primary btn-sm']) !!}
+                @elseif($sale->payment_id != null)
+                  {!! link_to_route('costomers.payment', '編集', ['id' => $sale->payment->sponser_id], ['class' => 'btn btn-primary btn-sm']) !!}
+                @elseif($sale->addition_id != null)
+                  {!! link_to_route('sales.addition_index', '編集', ['id' => $sale->addition->site_id], ['class' => 'btn btn-primary btn-sm']) !!}
+                @elseif($sale->cost_id != null)
+                  {!! link_to_route('costs.edit', '編集', ['cost' => $sale->cost_id], ['class' => 'btn btn-primary btn-sm']) !!}
+                @endif
+              </td>
+            </tr>
         @endforeach
       </tbody>
     </table>
@@ -215,17 +232,49 @@
   <?php
     $salesgraph = new \App\salesgraph;
 
-    list($varJsSales, $varJsMonth, $max, $i) = $salesgraph->create($sales);
-    //dd($varJsSales, $varJsMonth, $max,);
+    $varJsSales = [];
+    $max = 100000;
+    if(count($sales) != 0){
+      list($varJsSales, $max, $i) = $salesgraph->create($sales);
+    }
+
+    $diff = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    $min = 0;
+    $varJsCosts = [];
+    if(count($costs) != 0){
+      $varJsCosts = $salesgraph->createCostgraph($costs);
+      for($i=0; $i<=11; $i++){
+        $diff[$i] = (int)$varJsSales[$i] - (int)$varJsCosts[$i];
+
+        if($i >= 1){
+          $pre = $i - 1;
+
+          if($diff[$i] <= 0 && $diff[$i] < $diff[$i-1]){
+            $min = $diff[$i];
+            
+          } else if($diff[$i] <= 0 && $diff[$i] > $diff[$i-1]){
+            $min = $diff[$i-1];
+          }
+        }
+      }
+    }
+    $m = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+    $varJsMonth = json_encode($m);
+    $varJsSale = json_encode($varJsSales);
+    $varJsMin = json_encode($min);
+    $varJsDiff = json_encode($diff);
+    $varJsCost = json_encode($varJsCosts);
+    //dd($varJsCosts,$diff);
   ?>
 
-  @if($sales != null && $i > 1 || count($sales) == 1)
     <script type="text/javascript">
-        var sales = JSON.parse('<?php echo $varJsSales; ?>');
+        var sales = JSON.parse('<?php echo $varJsSale; ?>');
         var months = JSON.parse('<?php echo $varJsMonth; ?>');
         var max = JSON.parse('<?php echo $max; ?>');
+        var min = JSON.parse('<?php echo $varJsMin; ?>');
+        var costs = JSON.parse('<?php echo $varJsCost; ?>');
+        var diffs = JSON.parse('<?php echo $varJsDiff; ?>');
     </script>
-  @endif
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
   <script src="{{ asset('/js/chart-bar-demo.js') }}"></script>

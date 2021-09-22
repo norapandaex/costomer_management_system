@@ -13,24 +13,34 @@ var myLineChart = new Chart(ctx, {
       backgroundColor: "rgba(2,117,216,1)",
       borderColor: "rgba(2,117,216,1)",
       data: sales,
+    },{
+      label: "コスト",
+      backgroundColor: "rgba(255,0,0,1)",
+      borderColor: "rgba(255,0,0,1)",
+      data: costs,
+    },{
+      label: "収支",
+      backgroundColor: "rgba(18,137,22,1)",
+      borderColor: "rgba(18,137,22,1)",
+      data: diffs,
     }],
   },
   options: {
     scales: {
       xAxes: [{
         time: {
-          unit: 'month'
+          unit: 'month',
         },
         gridLines: {
           display: false
         },
         ticks: {
-          maxTicksLimit: 6
+          maxTicksLimit: 12
         }
-      }],
+      },],
       yAxes: [{
         ticks: {
-          min: 0,
+          min: min,
           max: max,
           maxTicksLimit: 10
         },

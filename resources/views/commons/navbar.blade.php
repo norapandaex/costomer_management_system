@@ -18,6 +18,9 @@
                 {!! link_to_route('sites.index', '一覧', [], ['class' => 'nav-link']) !!}
                 {!! link_to_route('sites.create', '登録', [], ['class' => 'nav-link']) !!}
 
+                <div class="sb-sidenav-menu-heading">コスト管理</div>
+                {!! link_to_route('costs.index', '一覧・登録', [], ['class' => 'nav-link']) !!}
+
                 <div class="sb-sidenav-menu-heading">売り上げ管理</div>
                 {!! link_to_route('sales.index', '一覧', [], ['class' => 'nav-link']) !!}
 
@@ -29,6 +32,15 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
+            @if(Auth::user()->division == 1)
+                HP制作事業部
+            @elseif(Auth::user()->division == 2)
+                P管理事業部1
+            @elseif(Auth::user()->division == 3)
+                P管理事業部2
+            @elseif(Auth::user()->division == 4)
+                メディア事業部
+            @endif<br>
             {{ Auth::user()->name }}
         </div>
     </nav>

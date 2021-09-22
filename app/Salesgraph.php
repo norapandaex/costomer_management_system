@@ -29,32 +29,35 @@ class Salesgraph extends Model
         return $this->belongsTo(Addition::class);
     }
 
+    public function cost()
+    {
+        return $this->belongsTo(Cost::class);
+    }
+
     public function create($sales)
     {
         $counts = count($sales);
         $i = 0;
+        $sales_data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         if ($sales != null) {
             foreach ($sales as $sale) {
                 if (count($sales) == 1) {
-                    $sales_data[] = $sale->sum_cost;
-                    $month_data[] = $sale->month;
-                    $varJsSales = json_encode($sales_data);
-                    $varJsMonth = json_encode($month_data);
+                    $m = new Carbon($sale->month);
+                    $mn = $m->month - 1;
+                    $sales_data[$mn] = $sale->sum_cost;
+                    $varJsSales = $sales_data;
                     $max = $sale->sum_cost;
-                    return [$varJsSales, $varJsMonth, $max, $i];
+                    return [$varJsSales, $max, $i];
                 } else {
                     if ($i == 0) {
                         $month1 = $sale->month;
                         $month2 = null;
-                        $sales_data = array();
-                        $month_data = array();
                         $cost2 = 0;
                         $cost = $sale->sum_cost;
                         $max = $sale->sum_cost;
                         $i++;
                     } else {
                         $month2 = $sale->month;
-                        $m[] = $sale->month;
                         $cost2 = $sale->sum_cost;
                         $i++;
                     }
@@ -63,15 +66,17 @@ class Salesgraph extends Model
                         if ($month1 == $month2) {
                             $cost = $cost + $cost2;
                         } else {
-                            $sales_data[] = $cost;
-                            $month_data[] = $month1;
+                            $m = new Carbon($month1);
+                            $mn = $m->month - 1;
+                            $sales_data[$mn] = $cost;
                             $cost = $cost2;
                             $month1 = $month2;
                         }
 
                         if ($i == $counts) {
-                            $sales_data[] = $cost;
-                            $month_data[] = $month1;
+                            $m = new Carbon($month2);
+                            $mn = $m->month - 1;
+                            $sales_data[$mn] = $cost;
                         }
 
                         if ($max < $cost) {
@@ -79,18 +84,71 @@ class Salesgraph extends Model
                         }
 
                         if (count($sales_data) >= 1) {
-                            $varJsSales = json_encode($sales_data);
-                            $varJsMonth = json_encode($month_data);
+                            $varJsSales = $sales_data;
                         }
                     }
                     //var_dump($cost, $month1, $i, $counts, $sales_data, $month_data);
                 }
             }
-            return [$varJsSales, $varJsMonth, $max, $i];
+            return [$varJsSales, $max, $i];
         }
     }
 
-    public function create_date($request, $id)
+    public function createCostgraph($costs)
+    {
+        $counts = count($costs);
+        $i = 0;
+        $cost_data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        if ($costs != null) {
+            foreach ($costs as $cost) {
+                if (count($costs) == 1) {
+                    $m = new Carbon($cost->month);
+                    $mn = $m->month - 1;
+                    $cost_data[$mn] = $cost->sum_cost;
+                    $varJsCosts = $cost_data;
+                    return $varJsCosts;
+                } else {
+                    if ($i == 0) {
+                        $month1 = $cost->month;
+                        $month2 = null;
+                        $cost2 = 0;
+                        $cost1 = $cost->costc;
+                        $i++;
+                    } else {
+                        $month2 = $cost->month;
+                        $cost2 = $cost->costc;
+                        $i++;
+                    }
+
+                    if ($i > 1) {
+                        if ($month1 == $month2) {
+                            $cost1 = $cost1 + $cost2;
+                        } else {
+                            $m = new Carbon($month1);
+                            $mn = $m->month - 1;
+                            $cost_data[$mn] = $cost1;
+                            $cost1 = $cost2;
+                            $month1 = $month2;
+                        }
+
+                        if ($i == $counts) {
+                            $m = new Carbon($month2);
+                            $mn = $m->month - 1;
+                            $cost_data[$mn] = $cost1;
+                        }
+
+                        if (count($cost_data) >= 1) {
+                            $varJsCosts = $cost_data;
+                        }
+                    }
+                    //var_dump($cost, $month1, $i, $counts, $sales_data, $month_data);
+                }
+            }
+            return $varJsCosts;
+        }
+    }
+
+    public function createDate($request, $id)
     {
         $site = \App\Site::find($id);
         $production_month = $request->production_month;
@@ -121,7 +179,7 @@ class Salesgraph extends Model
         }
     }
 
-    public function update_date($request, $id)
+    public function updateDate($request, $id)
     {
         $salesgraphs = \App\Salesgraph::where('site_id', $id)->get();
 
@@ -138,7 +196,7 @@ class Salesgraph extends Model
         $add->handle();
     }
 
-    public function create_sponser($request, $pid)
+    public function createSponser($request, $pid)
     {
         $payment = \App\Payment::find($pid);
 
@@ -153,7 +211,7 @@ class Salesgraph extends Model
         ]);
     }
 
-    public function create_addition($request, $id)
+    public function createAddition($request, $id)
     {
         $addition = \App\Addition::find($id);
 
@@ -168,7 +226,21 @@ class Salesgraph extends Model
         ]);
     }
 
-    public function create_year($salesgraphs)
+    public function createCost($request, $id)
+    {
+        $cost = \App\Cost::find($id);
+
+        $m = new Carbon($request->day);
+
+        $month = $m->format('Y-m');
+
+        $cost->salesgraphs()->create([
+            'costc' => $request->cost,
+            'month' => $month,
+        ]);
+    }
+
+    public function createYear($salesgraphs)
     {
         //$salesgraphs = \App\Salesgraph::orderBy('month', 'asc')->get();
         $year1 = 0;
