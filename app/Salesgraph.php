@@ -184,11 +184,16 @@ class Salesgraph extends Model
         $salesgraphs = \App\Salesgraph::where('site_id', $id)->get();
 
         foreach ($salesgraphs as $salesgraph) {
-            $sum = $request->production_cost + $request->operating_cost;
 
-            $salesgraph->production_cost = $request->production_cost;
-            $salesgraph->operating_cost = $request->operating_cost;
-            $salesgraph->sum_cost = $sum;
+            if ($salesgraph->production_cost != 0) {
+                $sum = $request->production_cost + $request->operating_cost;
+                $salesgraph->production_cost = $request->production_cost;
+                $salesgraph->operating_cost = $request->operating_cost;
+                $salesgraph->sum_cost = $sum;
+            } else {
+                $salesgraph->operating_cost = $request->operating_cost;
+                $salesgraph->sum_cost = $request->operating_cost;
+            }
 
             $salesgraph->save();
         }
