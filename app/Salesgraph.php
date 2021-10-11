@@ -184,16 +184,22 @@ class Salesgraph extends Model
         $salesgraphs = \App\Salesgraph::where('site_id', $id)->get();
 
         foreach ($salesgraphs as $salesgraph) {
-            $salesgraph->delete();
+            $sum = $request->production_cost + $request->operating_cost;
+
+            $salesgraph->production_cost = $request->production_cost;
+            $salesgraph->operating_cost = $request->operating_cost;
+            $salesgraph->sum_cost = $sum;
+
+            $salesgraph->save();
         }
 
-        $salesgraph = new \App\Salesgraph;
+        // $salesgraph = new \App\Salesgraph;
 
-        $salesgraph->create_date($request, $id);
+        // $salesgraph->createDate($request, $id);
 
-        $add = new \App\Console\Commands\AddOperatingCost;
+        // $add = new \App\Console\Commands\AddOperatingCost;
 
-        $add->handle();
+        // $add->handle();
     }
 
     public function createSponser($request, $pid)

@@ -43,13 +43,13 @@
               @if(Request::routeIs('sales.index')|| Request::routeIs('sales.month'))
                 <a href="{{ route('sales.index', []) }}" class="nav-link {{ Request::routeIs('sales.index') ? 'active' : '' }}{{ Request::routeIs('sales.month') ? 'active' : '' }}">月別売り上げ</a>
               @elseif(Request::routeIs('sales.production') || Request::routeIs('sales.production_month'))
-                <a href="{{ route('sales.production', []) }}" class="nav-link {{ Request::routeIs('sales.production') ? 'active' : '' }}">月別売り上げ</a>
+                <a href="{{ route('sales.production', []) }}" class="nav-link {{ Request::routeIs('sales.production') || Request::routeIs('sales.production_month') ? 'active' : '' }}">月別売り上げ</a>
               @elseif(Request::routeIs('sales.operating') || Request::routeIs('sales.operating_month'))
-                <a href="{{ route('sales.operating', []) }}" class="nav-link {{ Request::routeIs('sales.operating') ? 'active' : '' }}">月別売り上げ</a>
+                <a href="{{ route('sales.operating', []) }}" class="nav-link {{ Request::routeIs('sales.operating') || Request::routeIs('sales.operating_month') ? 'active' : '' }}">月別売り上げ</a>
               @elseif(Request::routeIs('sales.sponser') || Request::routeIs('sales.sponser_month'))
-                <a href="{{ route('sales.sponser', []) }}" class="nav-link {{ Request::routeIs('sales.sponser') ? 'active' : '' }}">月別売り上げ</a>
+                <a href="{{ route('sales.sponser', []) }}" class="nav-link {{ Request::routeIs('sales.sponser') || Request::routeIs('sales.sponser_month') ? 'active' : '' }}">月別売り上げ</a>
               @elseif(Request::routeIs('sales.addition') || Request::routeIs('sales.addition_month'))
-                <a href="{{ route('sales.addition', []) }}" class="nav-link {{ Request::routeIs('sales.addition') ? 'active' : '' }}">月別売り上げ</a>
+                <a href="{{ route('sales.addition', []) }}" class="nav-link {{ Request::routeIs('sales.addition') || Request::routeIs('sales.addition_month') ? 'active' : '' }}">月別売り上げ</a>
               @endif
             </li>
             <li class="nav-item">
@@ -110,12 +110,17 @@
         </div>
         <div class="col-12">&nbsp;</div>
         @if($cos != 0)
-          <?php
-            $sitenames = \App\Site::where('id', "$cos")->get();
-          ?>
-          @foreach ($sitenames as $sitename)
-          <h3>{{$sitename->name}}の売り上げ</h3>
-          @endforeach
+            @if(Request::routeIs('sales.sponser') || Request::routeIs('sales.sponser_month'))
+              <?php
+                $costomername = \App\Costomer::find($cos);
+              ?>
+              <h3>{{$costomername->name}}</h3>
+            @else
+              <?php
+                $sitename = \App\Site::find($cos);
+              ?>
+              <h3>{{$sitename->name}}</h3>
+            @endif
           <div class="col-12">&nbsp;</div>
         @endif
         <canvas id="myBarChart" width="100%" height="40"></canvas>
@@ -257,6 +262,17 @@
           }
         }
       }
+    }
+
+    $max_cost = 0;
+    foreach($varJsCosts as $cost){
+      if($max_cost < $cost){
+        $max_cost = $cost;
+      }
+    }
+
+    if($max_cost > $max){
+      $max = $max_cost;
     }
     $m = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
     $varJsMonth = json_encode($m);

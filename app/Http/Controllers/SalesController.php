@@ -249,6 +249,7 @@ class SalesController extends Controller
         $this_year = $dt->year;
 
         $sales = \App\Salesgraph::where('month', 'like', "%$this_year%")->where('sponserc', '<>', null)->orderBy('month', 'asc')->get();
+
         $costomers = \App\Costomer::all();
 
         $salesgraph = new \App\Salesgraph;
@@ -289,6 +290,7 @@ class SalesController extends Controller
 
     public function sponserMonth(Request $request)
     {
+        $sales = [];
         if ($request->costomer == 0) {
             $sales = \App\Salesgraph::where('month', 'like', "%$request->year%")->where('sponserc', '<>', '0')->orderBy('month', 'asc')->get();
             $costomers = \App\Costomer::all();
@@ -309,7 +311,7 @@ class SalesController extends Controller
         list($salesyears, $years) = $salesgraph->createYear($salesgraphs);
 
         $this_year = $request->year;
-        $cos = $request->site;
+        $cos = $request->costomer;
 
         return view('sales.index', [
             'sales' => $sales,
@@ -366,6 +368,7 @@ class SalesController extends Controller
 
     public function additionMonth(Request $request)
     {
+        $sales = [];
         if ($request->site == 0) {
             $sales = \App\Salesgraph::where('month', 'like', "%$request->year%")->where('additionc', '<>', '0')->orderBy('month', 'asc')->get();
             $sites = \App\Site::all();
