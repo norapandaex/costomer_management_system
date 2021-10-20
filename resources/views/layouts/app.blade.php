@@ -36,7 +36,6 @@
         </div>
     </div>
 
-
     <script src="{{ asset('/js/check.js') }}"></script>
     <script src="{{ asset('/js/datatables.js') }}"></script>
     <script src="{{ asset('/js/scripts.js') }}"></script>
