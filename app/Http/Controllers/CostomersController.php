@@ -109,7 +109,6 @@ class CostomersController extends Controller
         $costomer = \App\Costomer::findOrFail($id);
 
         $costomer->name = $request->team_name;
-        $costomer->rank = $request->rank;
         $costomer->relation = $request->relation;
         $costomer->category = $request->category;
         $costomer->staff = $request->staff;

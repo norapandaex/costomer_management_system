@@ -137,7 +137,6 @@ class SchedulesController extends Controller
                 'title' => $request->title,
                 'content' => $request->content,
                 'reminder' => $request->reminder,
-                'term' => $request->term,
             ]);
         } else {
             $request->user()->schedules()->create([
@@ -166,7 +165,6 @@ class SchedulesController extends Controller
         $schedule->title = $request->title;
         $schedule->content = $request->content;
         $schedule->reminder = $request->reminder;
-        $schedule->term = $request->term;
 
         $schedule->save();
 
@@ -205,21 +203,6 @@ class SchedulesController extends Controller
             $schedule->save();
         } else if ($status == 1) {
             $schedule->status = 0;
-            $schedule->save();
-        }
-
-        return back();
-    }
-
-    public function document($id, $document)
-    {
-        $schedule = \App\Schedule::findOrFail($id);
-
-        if ($document == 0) {
-            $schedule->document = 1;
-            $schedule->save();
-        } else if ($document == 1) {
-            $schedule->document = 0;
             $schedule->save();
         }
 
