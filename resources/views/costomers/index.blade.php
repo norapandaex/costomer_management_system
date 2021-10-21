@@ -10,7 +10,7 @@
     
     <div class="col-12">&nbsp;</div>
     
-    <table class="table table-bordered table-hover" id="schedules">
+    <table class="table table-bordered table-hover" id="defo">
         <thead>
             <tr>
                 <th>チーム名</th>
