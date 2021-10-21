@@ -13,12 +13,6 @@
                     <th>予定日時</th>
                     <td>{{ $schedule->day }}</td>
                 </tr>
-                @if($schedule->costomer_id != null)
-                    <tr>
-                        <th>資料期限</th>
-                        <td>{{ $schedule->term }}</td>
-                    </tr>
-                @endif
                 <tr>
                     <th>タイトル</th>
                     <td>{{ $schedule->title }}</td>
