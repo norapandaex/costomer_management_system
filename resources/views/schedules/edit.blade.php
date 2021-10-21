@@ -8,7 +8,6 @@
     @include('commons.error_messages')
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
-            <?php //dd($schedule) ?>
 
             {!! Form::model($schedule, ['route' => ['schedules.update', $schedule->id], 'method' => 'put']) !!}
             
@@ -16,13 +15,6 @@
                     {!! Form::label('day', '予定日時') !!}
                     <input type="datetime-local" name="day" class="form-control" value="{{$day}}">
                 </div>
-
-                @if($schedule->costomer_id != null)
-                    <div class="form-group">
-                        {!! Form::label('term', '資料期限') !!}
-                        <input type="datetime-local" name="term" class="form-control" value="{{$schedule->term}}">
-                    </div>
-                @endif
                 
                 <div class="form-group">
                     {!! Form::label('title', 'タトル') !!}

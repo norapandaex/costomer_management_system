@@ -50,12 +50,6 @@
         </div>
 
         <div class="col-12" id="checkBox" style="display:none;">
-
-            <div class="form-group">
-                {!! Form::label('term', '資料期限') !!}
-                <input type="datetime-local" name="term" class="form-control">
-            </div>
-
             <div class="form-group">
                 {!! Form::label('relation', 'チーム選択') !!}
                 <table class="table table-bordered table-hover" id="sites">
