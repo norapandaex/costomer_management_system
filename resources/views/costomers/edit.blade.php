@@ -17,6 +17,17 @@
                 </div>
 
                 <div class="form-group">
+                    {!! Form::label('rank', '顧客ランク') !!}
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="relation" name="rank">
+                            <option value="1" @if($costomer->rank == 1) selected @endif>A</option>
+                            <option value="2" @if($costomer->rank == 2) selected @endif>B</option>
+                            <option value="3" @if($costomer->rank == 3) selected @endif>C</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     {!! Form::label('relation', '関係') !!}
                     <div class="input-group mb-3">
                       <select class="custom-select" id="relation" name="relation">

@@ -5,9 +5,9 @@
 <ol class="breadcrumb mb-4">
   <li class="breadcrumb-item active">Schedule</li>
 </ol>
-<div class="row align-items-center">
+<div class="row ">
   <div class="col-10 offset-1">
-    <div class="card text-center">
+    <div class="card">
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
           <li class="nav-item">
@@ -25,12 +25,15 @@
         </ul>
       </div><br>
 
-      <div class="col-10 offset-1">
-        <table class="table table-bordered table-hover" id="schedules">
+      <div class="col-12">
+        {!! link_to_route('schedules.create', '作成', [], ['class' => 'btn btn-info']) !!}
+        <div class="col-12">&nbsp;</div>
+        <table class="table table-bordered table-hover" id="defo">
           <thead>
             <tr>
               <th>タイトル</th>
               <th>予定日時</th>
+              <th>資料期限</th>
               <th>状態</th>
               <th>リマインダー</th>
               <th>詳細</th>
@@ -41,6 +44,17 @@
             <tr>
               <td>{{ $schedule->title }}</td>
               <td>{{ $schedule->day }}</td>
+              <td>
+                @if($schedule->document == 0)
+                {!! Form::open(['route' => ['schedules.document', $schedule->id, $schedule->document], 'method' => 'put']) !!}
+                未完了&nbsp;&nbsp;{!! Form::submit('切替', ['class' => 'btn btn-success']) !!}
+                {!! Form::close() !!}
+                @else
+                {!! Form::open(['route' => ['schedules.document', $schedule->id, $schedule->document], 'method' => 'put']) !!}
+                完了&nbsp;&nbsp;{!! Form::submit('切替', ['class' => 'btn btn-success']) !!}
+                {!! Form::close() !!}
+                @endif
+              </td>
               <td>
                 @if($schedule->status == 0)
                 {!! Form::open(['route' => ['schedules.status', $schedule->id, $schedule->status], 'method' => 'put']) !!}

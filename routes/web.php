@@ -33,6 +33,7 @@ Route::get('schedules/show/id={id}', 'SchedulesController@show')->name('schedule
 Route::get('schedules/create', 'SchedulesController@create')->name('schedules.create');
 Route::get('schedules/edit/id={id}', 'SchedulesController@edit')->name('schedules.edit');
 Route::put('schedules/status/{id}/{status}', 'SchedulesController@status')->name('schedules.status');
+Route::put('schedules/document/{id}/{document}', 'SchedulesController@document')->name('schedules.document');
 Route::put('schedules/reminder/{id}/{reminder}', 'SchedulesController@reminder')->name('schedules.reminder');
 
 Route::group(['middleware' => ['auth', 'can:hp-only']], function () {
