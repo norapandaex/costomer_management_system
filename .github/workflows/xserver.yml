@@ -1,19 +1,21 @@
+name: deploy to remote
+
 on:
-  push:                 
-    branches:           
-      - master    
-name: Build and Deploy  
+  push:
+    branches:
+      - master
+
 jobs:
-  FTP-Deploy-Action:
-    name: FTP-Deploy-Action     # JOBの名前
-    runs-on: ubuntu-latest      # 仮想環境の種類を指定
+  deploy:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master                   
-      - name: FTP-Deploy-Action
-        uses: SamKirkland/FTP-Deploy-Action@2.0.0   
-        env:                                        
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}     
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }} 
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }} 
-          LOCAL_DIR: ./                           
-          REMOTE_DIR: "/xs592524.xsrv.jp/costomer"
+      - uses: actions/checkout@v1
+      - name: gulp build
+        uses: actions/setup-node@v1
+      - run: yarn install && yarn build
+      - name: ssh key generate
+        run: echo "$SSH_PRIVATE_KEY" > key && chmod 600 key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: rsync deploy
+        run: rsync -auzrv -e "ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 10022" --delete ./dist/* twor@sv12253.xserver.jp:/home/xs592524.xsrv.jp/costomer/ --exclude .htaccess
