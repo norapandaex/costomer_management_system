@@ -33,6 +33,20 @@
                             <td>{{ $costomer->name }}</td>
                         </tr>
                         <tr>
+                            <th>顧客ランク</th>
+                            <td>
+                                @if($costomer->rank == 1)
+                                    A
+                                @endif
+                                @if($costomer->rank == 2)
+                                    B
+                                @endif
+                                @if($costomer->rank == 3)
+                                    C
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
                             <th>関係</th>
                             <td>
                                 @if($costomer->category == 1)
