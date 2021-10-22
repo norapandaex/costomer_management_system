@@ -47,11 +47,11 @@
                             <td>{{ $sponser->rate }}</td>
                         </tr>
                         <tr>
-                            <th>開始日</th>
+                            <th>契約開始日</th>
                             <td>{{ $sponser->start }}</td>
                         </tr>
                         <tr>
-                            <th>終了日</th>
+                            <th>契約終了日</th>
                             <td>{{ $sponser->stop }}</td>
                         </tr>
                     </tbody>

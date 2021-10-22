@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('hp-only', function ($user) {
-            return ($user->division == 1);
+            return ($user->division == 1 || $user->division == 0);
         });
     }
 }

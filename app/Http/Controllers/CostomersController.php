@@ -109,6 +109,7 @@ class CostomersController extends Controller
         $costomer = \App\Costomer::findOrFail($id);
 
         $costomer->name = $request->team_name;
+        $costomer->rank = $request->rank;
         $costomer->relation = $request->relation;
         $costomer->category = $request->category;
         $costomer->staff = $request->staff;
@@ -237,7 +238,7 @@ class CostomersController extends Controller
         return view('costomers.sponser_edit', $data);
     }
 
-    public function sponser_update(Request $request, $id)
+    public function sponserUpdate(Request $request, $id)
     {
         $sponser = \App\Sponser::find($id);
 

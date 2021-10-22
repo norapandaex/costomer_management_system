@@ -25,12 +25,12 @@
         </div>
 
         <div class="form-group">
-          {!! Form::label('start', '開始日') !!}
+          {!! Form::label('start', '契約開始日') !!}
           <input type="date" name="start" class="form-control">
         </div>
 
         <div class="form-group">
-          {!! Form::label('stop', '終了日') !!}
+          {!! Form::label('stop', '契約終了日') !!}
           <input type="date" name="stop" class="form-control">
         </div>
 
