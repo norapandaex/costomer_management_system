@@ -18,4 +18,4 @@ jobs:
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }} 
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }} 
           LOCAL_DIR: ./                           
-          REMOTE_DIR: "xs592524/xs592524.xsrv.jp/costomer"
+          REMOTE_DIR: "/home/xs592524/xs592524.xsrv.jp/costomer"
