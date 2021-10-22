@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@main
       - name: FTP-Deploy-Action
         uses: SamKirkland/FTP-Deploy-Action@4.0.0   
-        env:                                        
+        with:                                        
           server: ${{ secrets.FTP_SERVER }}     
           username: ${{ secrets.FTP_USERNAME }} 
           password: ${{ secrets.FTP_PASSWORD }} 
