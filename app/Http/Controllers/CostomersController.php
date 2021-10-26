@@ -104,6 +104,7 @@ class CostomersController extends Controller
     {
         $request->validate([
             'team_name' => 'required',
+            'mystaff' => 'required',
         ]);
 
         $costomer = \App\Costomer::findOrFail($id);
@@ -122,7 +123,7 @@ class CostomersController extends Controller
         $costomer->tel = $request->tel;
 
         $costomer->save();
-        dd($costomer);
+
         return redirect()->route('costomers.show', ['costomer' => $costomer]);
     }
 
