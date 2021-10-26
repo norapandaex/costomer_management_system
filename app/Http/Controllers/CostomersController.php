@@ -120,9 +120,9 @@ class CostomersController extends Controller
         $costomer->other = $request->other;
         $costomer->email = $request->email;
         $costomer->tel = $request->tel;
-        dd($costomer);
-        $costomer->save();
 
+        $costomer->save();
+        dd($costomer);
         return redirect()->route('costomers.show', ['costomer' => $costomer]);
     }
 
