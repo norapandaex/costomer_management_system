@@ -5,7 +5,7 @@
 <ol class="breadcrumb mb-4">
   <li class="breadcrumb-item active">Sales</li>
 </ol>
-@if(count($salesgraphs) != 0)
+@if(count($sales) != 0)
   <div class="row align-items-center">
 
     @include('commons.error_messages')
