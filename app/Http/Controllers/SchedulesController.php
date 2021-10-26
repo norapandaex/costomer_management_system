@@ -176,7 +176,7 @@ class SchedulesController extends Controller
     public function destroy($id)
     {
         $schedule = \App\Schedule::findOrFail($id);
-
+        dd(\Auth::id(), $schedule->user_id);
         if (\Auth::id() === $schedule->user_id) {
             $schedule->delete();
         }
