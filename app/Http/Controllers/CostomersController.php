@@ -43,21 +43,35 @@ class CostomersController extends Controller
             'mystaff' => 'required',
         ]);
 
-        $costomers = new \App\Costomer;
+        $costomer = new \App\Costomer;
 
-        $costomers->name = $request->team_name;
-        $costomers->relation = $request->relation;
-        $costomers->category = $request->category;
-        $costomers->staff = $request->staff;
-        $costomers->mystaff = $request->mystaff;
-        $costomers->address = $request->address;
-        $costomers->prefecture = $request->prefecture;
-        $costomers->city = $request->city;
-        $costomers->other = $request->other;
-        $costomers->email = $request->email;
-        $costomers->tel = $request->tel;
-        //$costomers->contract = $request->contract;
-        $costomers->save();
+        // $costomers->name = $request->team_name;
+        // $costomers->relation = $request->relation;
+        // $costomers->category = $request->category;
+        // $costomers->staff = $request->staff;
+        // $costomers->mystaff = $request->mystaff;
+        // $costomers->address = $request->address;
+        // $costomers->prefecture = $request->prefecture;
+        // $costomers->city = $request->city;
+        // $costomers->other = $request->other;
+        // $costomers->email = $request->email;
+        // $costomers->tel = $request->tel;
+        // //$costomers->contract = $request->contract;
+        // $costomers->save();
+
+        $costomer->create([
+            "name" => $request->team_name,
+            "relation" => $request->relation,
+            "category" => $request->category,
+            "staff" => $request->staff,
+            "mystaff" => $request->mystaff,
+            "address" => $request->address,
+            "prefecture" => $request->prefecture,
+            "city" => $request->city,
+            "other" => $request->other,
+            "email" => $request->email,
+            "tel" => $request->tel,
+        ]);
 
 
         return redirect()->route('costomers.index');
