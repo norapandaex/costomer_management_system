@@ -40,6 +40,7 @@ class CostomersController extends Controller
     {
         $request->validate([
             'team_name' => 'required',
+            'mystaff' => 'required',
         ]);
 
         $costomers = new \App\Costomer;
@@ -339,7 +340,6 @@ class CostomersController extends Controller
     public function paymentDestroy($id, $sponser)
     {
         $salesgraph = \App\Salesgraph::where('payment_id', "$id")->firstOrFail();
-        dd($salesgraph);
 
         $salesgraph->delete();
 
