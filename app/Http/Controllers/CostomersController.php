@@ -299,7 +299,7 @@ class CostomersController extends Controller
 
         $salesgraph = new \App\Salesgraph;
 
-        $salesgraph->create_sponser($request, $pid);
+        $salesgraph->createSponser($request, $pid);
 
         return redirect()->route('costomers.payment', ['id' => $id]);
     }
@@ -324,7 +324,7 @@ class CostomersController extends Controller
 
         $month = $m->format('Y-m');
 
-        $salesgraph = \App\salesgraph::where('payment_id', "$id")->firstOrFail();
+        $salesgraph = \App\Salesgraph::where('payment_id', "$id")->firstOrFail();
 
         $salesgraph->month = $month;
         $salesgraph->sponserc = $request->amount;
@@ -337,7 +337,8 @@ class CostomersController extends Controller
 
     public function paymentDestroy($id, $sponser)
     {
-        $salesgraph = \App\salesgraph::where('payment_id', "$id")->firstOrFail();
+        $salesgraph = \App\Salesgraph::where('payment_id', "$id")->firstOrFail();
+        dd($salesgraph);
 
         $salesgraph->delete();
 
