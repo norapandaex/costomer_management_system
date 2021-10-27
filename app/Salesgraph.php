@@ -207,7 +207,7 @@ class Salesgraph extends Model
         // $add->handle();
     }
 
-    public function createSponser($request, $pid)
+    public function createSponser($request, $pid, $rate)
     {
         $payment = \App\Payment::find($pid);
 
@@ -215,10 +215,12 @@ class Salesgraph extends Model
 
         $month = $m->format('Y-m');
 
+        $profit = $request->amount * $rate * 0.01;
+
         $payment->salesgraphs()->create([
-            'sponserc' => $request->amount,
+            'sponserc' => $profit,
             'month' => $month,
-            'sum_cost' => $request->amount,
+            'sum_cost' => $profit,
         ]);
     }
 

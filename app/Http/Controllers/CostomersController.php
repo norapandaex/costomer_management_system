@@ -303,19 +303,13 @@ class CostomersController extends Controller
             'amount' => $request->amount,
         ]);
 
-        $payments = \App\Payment::get();
+        $pid = \App\Payment::max('id');
 
-        $pid = 0;
-
-        foreach ($payments as $payment) {
-            if ($pid < $payment->id) {
-                $pid = $payment->id;
-            }
-        }
+        $rate = $sponser->rate;
 
         $salesgraph = new \App\Salesgraph;
 
-        $salesgraph->createSponser($request, $pid);
+        $salesgraph->createSponser($request, $pid, $rate);
 
         return redirect()->route('costomers.payment', ['id' => $id]);
     }
@@ -340,11 +334,14 @@ class CostomersController extends Controller
 
         $month = $m->format('Y-m');
 
+        $rate = $payment->sponser->rate;
+        $profit = $request->amount * $rate * 0.01;
+
         $salesgraph = \App\Salesgraph::where('payment_id', "$id")->firstOrFail();
 
         $salesgraph->month = $month;
-        $salesgraph->sponserc = $request->amount;
-        $salesgraph->sum_cost = $request->amount;
+        $salesgraph->sponserc = $profit;
+        $salesgraph->sum_cost = $profit;
 
         $salesgraph->save();
 
