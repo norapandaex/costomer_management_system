@@ -22,10 +22,10 @@
                     <div class="input-group mb-3">
                         <select class="custom-select" id="inputGroupSelect01" name="division">
                           <option value="0">選択</option>
-                          <option value="1">HP制作事業部</option>
-                          <option value="2">P管理事業部1</option>
-                          <option value="3">P管理事業部2</option>
-                          <option value="4">メディア事業部</option>
+                          <option value="1">WEB事業部/HP制作事業部</option>
+                          <option value="4">WEB事業部/メディア事業部</option>
+                          <option value="2">P管理事業部/マーケティング事業部</option>
+                          <option value="3">P管理事業部/動画事業部</option>
                         </select>
                     </div>
                 </div>
