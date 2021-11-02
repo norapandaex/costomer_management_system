@@ -35,4 +35,14 @@ class Site extends Model
     {
         return $this->hasMany(Addition::class);
     }
+
+    public function operatings()
+    {
+        return $this->hasMany(Operating::class);
+    }
+
+    public function operecords()
+    {
+        return $this->hasMany(Operecord::class);
+    }
 }

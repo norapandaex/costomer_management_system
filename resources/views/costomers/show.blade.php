@@ -20,6 +20,9 @@
                         {!! link_to_route('proceedings.index', 'ミーティング議事録', ['id' => $costomer->id], ['class' => 'nav-link']) !!}
                     </li>
                     <li class="nav-item">
+                        {!! link_to_route('costomers.operate', '入金済み運営費', ['id' => $costomer->id], ['class' => 'nav-link']) !!}
+                    </li>
+                    <li class="nav-item">
                         {!! link_to_route('costomers.sponser', 'スポンサー管理', ['id' => $costomer->id], ['class' => 'nav-link']) !!}
                     </li>
                 </ul>
@@ -117,6 +120,10 @@
                         <tr>
                             <th>スポンサー数</th>
                             <td>{{$count}}</td>
+                        </tr>
+                        <tr>
+                            <th>累計売り上げ</th>
+                            <td>{{$operate}}</td>
                         </tr>
                     </tbody>
                 </table><br>

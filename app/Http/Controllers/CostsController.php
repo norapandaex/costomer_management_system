@@ -129,6 +129,7 @@ class CostsController extends Controller
      */
     public function destroy($id)
     {
+
         $cost = \App\Cost::find($id);
 
         $cost->delete();

@@ -76,7 +76,6 @@ class UsersController extends Controller
         $user = \App\User::find($id);
 
         $user->name = $request->name;
-        $user->division = $request->division;
         $user->email = $request->email;
 
         $user->save();

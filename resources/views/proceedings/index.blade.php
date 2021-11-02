@@ -20,6 +20,9 @@
             {!! link_to_route('proceedings.index', 'ミーティング議事録', ['id' => $costomer->id], ['class' => 'nav-link active']) !!}
           </li>
           <li class="nav-item">
+              {!! link_to_route('costomers.operate', '入金済み運営費', ['id' => $costomer->id], ['class' => 'nav-link']) !!}
+          </li>
+          <li class="nav-item">
             {!! link_to_route('costomers.sponser', 'スポンサー管理', ['id' => $costomer->id], ['class' => 'nav-link']) !!}
           </li>
         </ul>

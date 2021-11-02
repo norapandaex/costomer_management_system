@@ -69,7 +69,12 @@
                         </tr>
                         <tr>
                             <th>運営費</th>
-                            <td>{{ $site->operating_cost }}</td>
+                            <td>
+                                <?php $operecords = $site->operecords; ?>
+                                @foreach ($operecords as $operecord)
+                                    {{ $operecord->month }}〜 {{ $operecord->operating_cost}}
+                                @endforeach
+                            </td>
                         </tr>
                         <tr>
                             <th>契約内容</th>
