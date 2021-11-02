@@ -7,6 +7,60 @@ use Carbon\Carbon;
 
 class CostomersController extends Controller
 {
+    public function operatingList()
+    {
+        $operating = new \App\Operating;
+
+        $operating->addOperating();
+
+        $operatings = \App\Operating::where('check', 0)->orderBy('day', 'asc')->get();
+
+        return view('costomers.operating', [
+            'operatings' => $operatings,
+        ]);
+    }
+
+    public function paidList()
+    {
+        $operatings = \App\Operating::where('check', 1)->get();
+
+        return view('costomers.paid', [
+            'operatings' => $operatings,
+        ]);
+    }
+
+    public function paid($id)
+    {
+        $operating = \App\Operating::find($id);
+
+        $operating->check = 1;
+
+        $operating->save();
+
+        $operating->salesgraphs()->create([
+            'operating_cost' => $operating->operecord->operating_cost,
+            'month' => $operating->day,
+            'sum_cost' => $operating->operecord->operating_cost,
+        ]);
+
+        return redirect()->route('costomers.operatingList');
+    }
+
+    public function pay($id)
+    {
+        $operating = \App\Operating::find($id);
+
+        $operating->check = 0;
+
+        $operating->save();
+
+        $salesgraph = \App\Salesgraph::where('operating_id', $id)->first();
+
+        $salesgraph->delete();
+
+        return redirect()->route('costomers.paidList');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -78,7 +132,23 @@ class CostomersController extends Controller
 
         $sponsers = \App\Sponser::where('costomer_id', "$id")->get();
 
-        return view('costomers.show', ['costomer' => $costomer, 'sites' => $sites, 'count' => count($sponsers),]);
+        $opes = \App\Operating::all();
+        $operate = 0;
+        foreach ($sites as $site) {
+            $operate = $operate + $site->production_cost;
+            foreach ($opes as $ope) {
+                if ($ope->operecord->site == $site) {
+                    $operatings[] = $ope;
+                }
+            }
+        }
+        foreach ($operatings as $operating) {
+            if ($operating->check == 1) {
+                $operate =  $operate + $operating->operecord->operating_cost;
+            }
+        }
+
+        return view('costomers.show', ['costomer' => $costomer, 'sites' => $sites, 'count' => count($sponsers), 'operate' => $operate]);
     }
 
     /**
@@ -159,6 +229,27 @@ class CostomersController extends Controller
         }
 
         return view('costomers.meeting', ['schedules' => $schedules, 'costomer' => $costomer]);
+    }
+
+    public function operate($id)
+    {
+        $costomer = \App\Costomer::find($id);
+
+        $site = $costomer->sites->first();
+
+        $operatings = $site->operatings;
+
+        $sales = [];
+
+        foreach ($operatings as $operating) {
+            $sale = \App\Salesgraph::where('operating_id', $operating->id)->first();
+
+            if ($sale != null) {
+                $sales[] = $sale;
+            }
+        }
+
+        return view('costomers.operate', ['sales' => $sales, 'costomer' => $costomer]);
     }
 
 

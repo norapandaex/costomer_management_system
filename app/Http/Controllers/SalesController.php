@@ -422,9 +422,18 @@ class SalesController extends Controller
             'sum_cost' => $sum,
         ]);
 
+        $site->operecords()->create([
+            'operating_cost' => $request->operating_cost,
+            'month' => $request->operating_month,
+        ]);
+
         $salesgraph = new \App\Salesgraph;
 
         $salesgraph->createDate($request, $id);
+
+        $operating = new \App\Operating;
+
+        $operating->createDate($request, $id);
 
         return redirect()->route('sales.edit', ['id' => $id]);
     }
@@ -489,13 +498,25 @@ class SalesController extends Controller
 
         $sales->save();
 
-        $salesgraph = new \App\Salesgraph;
+        $sales->site->operecords()->create([
+            'operating_cost' => $request->operating_cost,
+            'month' => $request->operating_month,
+        ]);
 
-        $id = $sales->site_id;
+        $site = \App\Site::find($sales->site_id);
 
-        $salesgraph->updateDate($request, $id);
+        $site->production_cost = $request->production_cost;
+        $site->operating_cost = $request->operating_cost;
 
-        return redirect()->route('sales.edit', ['id' => $id]);
+        $site->save();
+
+        // $salesgraph = new \App\Salesgraph;
+
+        // $id = $sales->site_id;
+
+        // $salesgraph->updateDate($request, $id);
+
+        return redirect()->route('sales.edit', ['id' => $site->id]);
     }
 
     /**

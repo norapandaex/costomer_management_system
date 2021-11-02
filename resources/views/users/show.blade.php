@@ -56,19 +56,6 @@
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('division', '所属') !!}
-                    <div class="input-group mb-3">
-                        <select class="custom-select" id="inputGroupSelect01" name="division">
-                          <option value="0">選択</option>
-                          <option value="1" @if($user->division == 1) selected @endif>WEB事業部/HP制作事業部</option>
-                          <option value="4" @if($user->division == 4) selected @endif>WEB事業部/メディア事業部</option>
-                          <option value="2" @if($user->division == 2) selected @endif>P管理事業部/マーケティング事業部</option>
-                          <option value="3" @if($user->division == 3) selected @endif>P管理事業部/動画事業部</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
                     {!! Form::label('email', 'メールアドレス') !!}
                     {!! Form::email('email', $user->email, ['class' => 'form-control']) !!}
                 </div>

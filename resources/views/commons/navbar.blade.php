@@ -18,6 +18,7 @@
                     <div id="p2">
                         {!! link_to_route('costomers.index', '一覧', [], ['class' => 'nav-link']) !!}
                         {!! link_to_route('costomers.create', '登録', [], ['class' => 'nav-link']) !!}
+                        {!! link_to_route('costomers.operatingList', '運営費管理', [], ['class' => 'nav-link']) !!}
                     </div>
 
                     <a href="#" style="text-decoration: none;"><div class="sb-sidenav-menu-heading" onclick="clickBtn3()" style="color: rgba(249, 248, 248, 0.825);">サイト管理 ▼</div></a>

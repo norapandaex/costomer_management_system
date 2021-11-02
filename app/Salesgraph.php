@@ -34,6 +34,11 @@ class Salesgraph extends Model
         return $this->belongsTo(Cost::class);
     }
 
+    public function operating()
+    {
+        return $this->belongsTo(Operating::class);
+    }
+
     public function create($sales)
     {
         $counts = count($sales);
@@ -155,45 +160,73 @@ class Salesgraph extends Model
         $operating_month = $request->operating_month;
         $sum = $request->production_cost + $request->operating_cost;
 
-        if ($production_month == $operating_month) {
-            $site->salesgraphs()->create([
-                'production_cost' => $request->production_cost,
-                'operating_cost' => $request->operating_cost,
-                'month' => $request->production_month,
-                'sum_cost' => $sum,
-            ]);
-        } else {
-            $site->salesgraphs()->create([
-                'production_cost' => $request->production_cost,
-                'operating_cost' => 0,
-                'month' => $request->production_month,
-                'sum_cost' => $request->production_cost,
-            ]);
+        //if ($production_month == $operating_month) {
+        $site->salesgraphs()->create([
+            'production_cost' => $request->production_cost,
+            'operating_cost' => null,
+            'month' => $request->production_month,
+            'sum_cost' => $request->production_cost,
+        ]);
+        // } else {
+        //     $site->salesgraphs()->create([
+        //         'production_cost' => $request->production_cost,
+        //         'operating_cost' => 0,
+        //         'month' => $request->production_month,
+        //         'sum_cost' => $request->production_cost,
+        //     ]);
 
-            $site->salesgraphs()->create([
-                'production_cost' => 0,
-                'operating_cost' => $request->operating_cost,
-                'month' => $request->operating_month,
-                'sum_cost' => $request->operating_cost,
-            ]);
-        }
+        //     $site->salesgraphs()->create([
+        //         'production_cost' => 0,
+        //         'operating_cost' => $request->operating_cost,
+        //         'month' => $request->operating_month,
+        //         'sum_cost' => $request->operating_cost,
+        //     ]);
+        // }
     }
 
-    public function updateDate($request, $id)
+    public function updateProduction($request, $id)
     {
         $salesgraphs = \App\Salesgraph::where('site_id', $id)->get();
 
         foreach ($salesgraphs as $salesgraph) {
 
-            if ($salesgraph->production_cost != 0) {
-                $sum = $request->production_cost + $request->operating_cost;
-                $salesgraph->production_cost = $request->production_cost;
-                $salesgraph->operating_cost = $request->operating_cost;
-                $salesgraph->sum_cost = $sum;
-            } else {
-                $salesgraph->operating_cost = $request->operating_cost;
-                $salesgraph->sum_cost = $request->operating_cost;
-            }
+            //if ($salesgraph->production_cost != 0) {
+            $sum = $request->production_cost;
+            $salesgraph->production_cost = $request->production_cost;
+            //$salesgraph->operating_cost = $request->operating_cost;
+            $salesgraph->sum_cost = $sum;
+            // } else {
+            //     $salesgraph->operating_cost = $request->operating_cost;
+            //     $salesgraph->sum_cost = $request->operating_cost;
+            // }
+
+            $salesgraph->save();
+        }
+
+        // $salesgraph = new \App\Salesgraph;
+
+        // $salesgraph->createDate($request, $id);
+
+        // $add = new \App\Console\Commands\AddOperatingCost;
+
+        // $add->handle();
+    }
+
+    public function updateOperating($request, $id)
+    {
+        $salesgraphs = \App\Salesgraph::where('site_id', $id)->get();
+
+        foreach ($salesgraphs as $salesgraph) {
+
+            //if ($salesgraph->production_cost != 0) {
+            $sum = $request->production_cost;
+            $salesgraph->production_cost = $request->production_cost;
+            //$salesgraph->operating_cost = $request->operating_cost;
+            $salesgraph->sum_cost = $sum;
+            // } else {
+            //     $salesgraph->operating_cost = $request->operating_cost;
+            //     $salesgraph->sum_cost = $request->operating_cost;
+            // }
 
             $salesgraph->save();
         }
