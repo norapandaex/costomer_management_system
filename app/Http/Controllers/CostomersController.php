@@ -148,6 +148,7 @@ class CostomersController extends Controller
 
         $opes = \App\Operating::all();
         $operate = 0;
+        $operatings = [];
         foreach ($sites as $site) {
             $operate = $operate + $site->production_cost;
             foreach ($opes as $ope) {
