@@ -252,19 +252,22 @@ class CostomersController extends Controller
 
         $site = $costomer->sites->first();
 
-        $operatings = $site->operatings;
+        $operecords = $site->operecords;
 
-        $sales = [];
+        $paieds = [];
 
-        foreach ($operatings as $operating) {
-            $sale = \App\Salesgraph::where('operating_id', $operating->id)->first();
+        foreach ($operecords as $operecord) {
 
-            if ($sale != null) {
-                $sales[] = $sale;
+            $operatings = $operecord->operatings;
+
+            foreach ($operatings as $operating) {
+                if ($operating->check == 1) {
+                    $paieds[] = $operating;
+                }
             }
         }
 
-        return view('costomers.operate', ['sales' => $sales, 'costomer' => $costomer]);
+        return view('costomers.operate', ['paieds' => $paieds, 'costomer' => $costomer]);
     }
 
 
