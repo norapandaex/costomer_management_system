@@ -7,7 +7,7 @@
     </ol>
     
     <div class="col-12">&nbsp;</div>
-
+    <h3>運営費管理</h3>
     <div class="card">
       <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs">
@@ -35,9 +35,9 @@
                 @foreach($operatings as $operating)
                 <tr>
                   <td>{{ $operating->day }}</td>
-                  <td>{{ $operating->site->costomer->name }}</td>
-                  <td>{{ $operating->site->name }}</td>
-                  <td>{{ $operating->site->operating_cost }}</td>
+                  <td>{{ $operating->operecord->site->costomer->name }}</td>
+                  <td>{{ $operating->operecord->site->name }}</td>
+                  <td>{{ $operating->operecord->operating_cost }}</td>
                   <td>
                     {!! Form::open(['route' => ['costomers.pay', $operating->id], 'method' => 'put']) !!}
                       {!! Form::submit('未入金に戻す', ['class' => 'btn btn-success']) !!}

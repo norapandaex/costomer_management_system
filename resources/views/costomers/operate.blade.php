@@ -37,11 +37,11 @@
                   </tr>
                 </thead>
                 <tbody class="text-center">
-                  @foreach($sales as $sale)
+                  @foreach($paieds as $paied)
                       <tr>
-                        <td>{{ $sale->month }}</td>
+                        <td>{{ $paied->day }}</td>
                         <td>
-                            {{ $sale->operating_cost }}
+                            {{ $paied->operecord->operating_cost }}
                         </td>
                       </tr>
                   @endforeach
