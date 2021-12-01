@@ -20,13 +20,21 @@
       @endif
 
       @include('commons.error_messages')
+
+      @if(Auth::user()->division == 0)
+        {!! link_to_route('users.index', '社員一覧', [], ['class' => 'btn btn-info']) !!}
+    　@endif
       
+    <div class="col-10 offset-1">&nbsp;</div>
+
         <table class="table table-bordered table-hover">
             <tbody>
                 <tr>
                     <th>所属</th>
                     <td>
-                      @if(Auth::user()->division == 1)
+                      @if(Auth::user()->division == 0)
+                          管理者
+                      @elseif(Auth::user()->division == 1)
                           WEB事業部/HP制作事業部
                       @elseif(Auth::user()->division == 2)
                           P管理事業部/マーケティング事業部
