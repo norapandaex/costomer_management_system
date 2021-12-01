@@ -37,9 +37,10 @@
                         {!! link_to_route('sales.index', '一覧', [], ['class' => 'nav-link']) !!}
                     </div>
                 @endif
-
+                @if(Auth::user()->division == 0)
                 <br>
                 {!! link_to_route('signup.get', 'ユーザ登録', [], ['class' => 'nav-link']) !!}
+                @endif
 
                 {!! link_to_route('logout.get', 'ログアウト', [], ['class' => 'nav-link']) !!}
             </div>
@@ -47,7 +48,9 @@
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
             <div style="color: white;">
-            @if(Auth::user()->division == 1)
+            @if(Auth::user()->division == 0)
+                管理者
+            @elseif(Auth::user()->division == 1)
                 WEB事業部/HP制作事業部
             @elseif(Auth::user()->division == 2)
                 P管理事業部/マーケティング事業部

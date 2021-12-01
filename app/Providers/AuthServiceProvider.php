@@ -28,5 +28,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('hp-only', function ($user) {
             return ($user->division == 1 || $user->division == 0);
         });
+
+        Gate::define('admin', function ($user) {
+            return ($user->division == 0);
+        });
     }
 }

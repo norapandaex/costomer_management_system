@@ -14,7 +14,11 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        $users = \App\User::all();
+
+        return view('users.index', [
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -81,6 +85,17 @@ class UsersController extends Controller
         $user->save();
 
         return redirect()->route('users.show', ['user' => $user->id]);
+    }
+
+    public function divisionUpdate(Request $request, $id)
+    {
+        $user = \App\User::find($id);
+
+        $user->division = $request->division;
+
+        $user->save();
+
+        return redirect()->route('users.index');
     }
 
     /**

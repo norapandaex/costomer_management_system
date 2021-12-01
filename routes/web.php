@@ -24,9 +24,15 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('login.post');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 
-Route::resource('users', 'UsersController', ['only' => ['update', 'show']]);
+Route::resource('users', 'UsersController', ['only' => ['edit', 'update', 'show']]);
 Route::patch('users', 'Auth\ChangePasswordController@update')->name('users.password_update');
+
 Route::resource('schedules', 'SchedulesController', ['only' => ['store', 'destroy', 'update']]);
+
+Route::group(['middleware' => ['auth', 'can:admin']], function () {
+    Route::get('user/index', 'UsersController@index')->name('users.index');
+    Route::put('user/division/{id}', 'UsersController@divisionUpdate')->name('users.division');
+});
 
 //スケージュル
 Route::get('schedules/index', 'SchedulesController@index')->name('schedules.index');
