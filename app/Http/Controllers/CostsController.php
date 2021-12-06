@@ -61,7 +61,7 @@ class CostsController extends Controller
 
         $salesgraph = new \App\Salesgraph;
 
-        $salesgraph->create_cost($request, $cid);
+        $salesgraph->createCost($request, $cid);
 
         return redirect()->route('costs.index');
     }
