@@ -109,7 +109,7 @@ class Salesgraph extends Model
                 if (count($costs) == 1) {
                     $m = new Carbon($cost->month);
                     $mn = $m->month - 1;
-                    $cost_data[$mn] = $cost->sum_cost;
+                    $cost_data[$mn] = $cost->costc;
                     $varJsCosts = $cost_data;
                     return $varJsCosts;
                 } else {
