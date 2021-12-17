@@ -14,7 +14,7 @@
             {!! link_to_route('sites.show', 'サイト詳細', ['site' => $site->id], ['class' => 'nav-link']) !!}
           </li>
           <li class="nav-item">
-            {!! link_to_route('sites.pv', 'pv数', ['id' => $site->id], ['class' => 'nav-link']) !!}
+            {!! link_to_route('sites.pv', 'アクセス解析', ['id' => $site->id], ['class' => 'nav-link']) !!}
           </li>
           <li class="nav-item">
             {!! link_to_route('sales.edit', '売り上げ設定', ['id' => $site->id], ['class' => 'nav-link']) !!}
