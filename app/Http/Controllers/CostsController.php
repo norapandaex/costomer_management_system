@@ -132,6 +132,10 @@ class CostsController extends Controller
 
         $cost = \App\Cost::find($id);
 
+        $salesgraph = \App\Salesgraph::where('cost_id', $cost->id)->first();
+
+        $salesgraph->delete();
+
         $cost->delete();
 
         return redirect()->route('costs.index');
